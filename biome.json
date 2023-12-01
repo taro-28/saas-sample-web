@@ -4,7 +4,8 @@
 		"enabled": true
 	},
 	"formatter": {
-		"enabled": true
+		"enabled": true,
+		"formatWithErrors": true
 	},
 	"linter": {
 		"enabled": true,
