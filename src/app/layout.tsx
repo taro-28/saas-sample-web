@@ -14,7 +14,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const hoge = await request();
-  console.log(hoge);
+  console.log(hoge, "in layout");
 
   return (
     <ClerkProvider>

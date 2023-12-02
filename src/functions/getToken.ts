@@ -27,7 +27,8 @@ export async function request() {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ query: "query {todos {id}}" }),
   });
-  console.info(res.data);
+
+  return res.data;
 }
 
 request().catch((err) => {
