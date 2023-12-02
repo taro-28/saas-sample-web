@@ -21,7 +21,12 @@ export async function request() {
 
   // Alternatively, one can use `client.idTokenProvider.fetchIdToken`
   // to return the ID Token.
-  const res = await client.request({ url: targetAudience });
+  const res = await client.request({
+    url: `${targetAudience}/query`,
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ query: "query {todos {id}}" }),
+  });
   console.info(res.data);
 }
 
