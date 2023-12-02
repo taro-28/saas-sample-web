@@ -1,3 +1,4 @@
+import { request } from "@/functions/getToken";
 import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
 import "./globals.css";
@@ -7,11 +8,14 @@ export const metadata: Metadata = {
   description: "A sample SaaS application built with Next.js",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const hoge = await request();
+  console.log(hoge);
+
   return (
     <ClerkProvider>
       <html lang="en">
