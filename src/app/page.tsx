@@ -1,7 +1,10 @@
 import { Card } from "@/components/Card";
 import { PageTitle } from "@/components/PageTitle";
-import { request } from "@/functions/getToken";
+import { TODO } from "@/features/todo";
+import { gqlRequest } from "@/functions/gqlRequest";
 import { ComponentPropsWithoutRef } from "react";
+import { columns } from "./columns";
+import { DataTable } from "./data-table";
 
 const todos: ComponentPropsWithoutRef<typeof Card>[] = [
   {
@@ -43,16 +46,13 @@ const todos: ComponentPropsWithoutRef<typeof Card>[] = [
 ];
 
 export default async function Home() {
-  const hoge = await request();
+  const { data } = (await gqlRequest({
+    query: "query {todos {id text}}",
+  })) as { data: { todos: TODO[] } };
   return (
     <div className="w-full space-y-4">
       <PageTitle>Todo</PageTitle>
-      <div>{JSON.stringify(hoge)}</div>
-      <div className="grid grid-cols-3 gap-4">
-        {todos.map(({ title, content }) => (
-          <Card content={content} key={`${title}-${content}`} title={title} />
-        ))}
-      </div>
+      <DataTable columns={columns} data={data.todos} />
     </div>
   );
 }
