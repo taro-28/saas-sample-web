@@ -15,7 +15,7 @@ export const NavigationItemLink = ({
       {...props}
       className={clsx(
         className,
-        href === pathname ? "text-blue-500" : "text-gray-500"
+        href === pathname ? "text-blue-500" : "text-gray-500",
       )}
       href={href}
     />
