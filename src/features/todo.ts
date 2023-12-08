@@ -1,4 +1,4 @@
 export type TODO = {
   id: string;
-  text: string;
+  content: string;
 };

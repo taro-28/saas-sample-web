@@ -9,7 +9,7 @@ export const columns: ColumnDef<TODO>[] = [
     header: "ID",
   },
   {
-    accessorKey: "text",
-    header: "Text",
+    accessorKey: "content",
+    header: "Content",
   },
 ];
