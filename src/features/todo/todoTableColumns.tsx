@@ -5,7 +5,7 @@ import { TODO } from "@/features/todo/type";
 import { ColumnDef } from "@tanstack/react-table";
 import { Trash2 } from "lucide-react";
 
-export const columns: ColumnDef<TODO>[] = [
+export const todoTableColumns: ColumnDef<TODO>[] = [
   {
     accessorKey: "id",
     header: "ID",

@@ -3,7 +3,7 @@ import { CreateTodoForm } from "@/features/todo/CreateTodoForm";
 import { TODO } from "@/features/todo/type";
 import { gqlRequest } from "@/functions/gqlRequest";
 import { DataTable } from "../components/ui/data-table";
-import { columns } from "./columns";
+import { todoTableColumns } from "../features/todo/todoTableColumns";
 
 export default async function Home() {
   const { data } = (await gqlRequest({
@@ -14,7 +14,11 @@ export default async function Home() {
     <div className="w-full space-y-4">
       <PageTitle>Todo</PageTitle>
       <CreateTodoForm />
-      <DataTable columns={columns} data={data.todos} hiddenColumns={["id"]} />
+      <DataTable
+        columns={todoTableColumns}
+        data={data.todos}
+        hiddenColumns={["id"]}
+      />
     </div>
   );
 }
