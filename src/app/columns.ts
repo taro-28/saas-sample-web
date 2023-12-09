@@ -1,5 +1,3 @@
-"use client";
-
 import { TODO } from "@/features/todo/type";
 import { ColumnDef } from "@tanstack/react-table";
 
