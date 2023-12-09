@@ -2,6 +2,7 @@
 
 import {
   ColumnDef,
+  VisibilityState,
   flexRender,
   getCoreRowModel,
   getSortedRowModel,
@@ -22,19 +23,21 @@ import { ArrowUpDown, MoveDown, MoveUp } from "lucide-react";
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  hiddenColumns?: (keyof TData)[];
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  hiddenColumns = [],
 }: DataTableProps<TData, TValue>) {
   const table = useReactTable({
     data,
     columns,
     state: {
-      columnVisibility: {
-        id: false,
-      },
+      columnVisibility: Object.fromEntries(
+        hiddenColumns.map((key) => [key, false])
+      ),
     },
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),

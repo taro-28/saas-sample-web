@@ -14,7 +14,7 @@ export default async function Home() {
     <div className="w-full space-y-4">
       <PageTitle>Todo</PageTitle>
       <CreateTodoForm />
-      <DataTable columns={columns} data={data.todos} />
+      <DataTable columns={columns} data={data.todos} hiddenColumns={["id"]} />
     </div>
   );
 }
