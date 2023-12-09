@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { deleteTodo } from "@/features/todo/deleteTodo";
 import { TODO } from "@/features/todo/type";
 import { ColumnDef } from "@tanstack/react-table";
-import { Trash, Trash2, Trash2Icon, TrashIcon } from "lucide-react";
+import { Trash2 } from "lucide-react";
 
 export const columns: ColumnDef<TODO>[] = [
   {
