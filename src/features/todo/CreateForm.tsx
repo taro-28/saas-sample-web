@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Plus } from "lucide-react";
 import { useFormState, useFormStatus } from "react-dom";
-import { createTodo } from "./createTodo";
+import { createTodo } from "./create";
 
 export const CreateTodoForm = () => {
   const [{ message }, action] = useFormState(createTodo, { message: "" });

@@ -1,6 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { deleteTodo } from "@/features/todo/deleteTodo";
+import { deleteTodo } from "@/features/todo/delete";
 import { TODO } from "@/features/todo/type";
 import { ColumnDef } from "@tanstack/react-table";
 import {
@@ -10,7 +10,7 @@ import {
   CircleDashed,
   Trash2,
 } from "lucide-react";
-import { toggleTodoDone } from "./toggleTodoDone";
+import { toggleTodoDone } from "./toggleDone";
 
 export const todoTableColumns: ColumnDef<TODO>[] = [
   {
