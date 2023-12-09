@@ -12,7 +12,7 @@ export const CreateTodoForm = () => {
   return (
     <form action={action}>
       <div className="flex space-x-2">
-        <Input name="content" required />
+        <Input name="content" placeholder="What needs to be done?" required />
         <Button disabled={pending}>
           <Plus className="mr-1 h-4 w-4" />
           Add
