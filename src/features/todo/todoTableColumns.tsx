@@ -3,7 +3,14 @@ import { Button } from "@/components/ui/button";
 import { deleteTodo } from "@/features/todo/deleteTodo";
 import { TODO } from "@/features/todo/type";
 import { ColumnDef } from "@tanstack/react-table";
-import { Trash2 } from "lucide-react";
+import {
+  Check,
+  CheckCircle,
+  CheckCircle2,
+  CircleDashed,
+  Trash2,
+} from "lucide-react";
+import { toggleTodoDone } from "./toggleTodoDone";
 
 export const todoTableColumns: ColumnDef<TODO>[] = [
   {
@@ -17,6 +24,17 @@ export const todoTableColumns: ColumnDef<TODO>[] = [
   {
     accessorKey: "done",
     header: "Done",
+    cell: ({ row }) => {
+      return (
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={() => toggleTodoDone(row.original.id, !row.original.done)}
+        >
+          {row.original.done ? <CheckCircle /> : <CircleDashed />}
+        </Button>
+      );
+    },
   },
   {
     id: "delete",
