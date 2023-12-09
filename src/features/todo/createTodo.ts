@@ -26,6 +26,6 @@ export async function createTodo(prevState: unknown, formData: FormData) {
           }`,
   });
 
-  revalidatePath("/todo");
+  revalidatePath("/");
   return { message: "" };
 }
