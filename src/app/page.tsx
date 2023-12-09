@@ -7,7 +7,7 @@ import { DataTable } from "./data-table";
 
 export default async function Home() {
   const { data } = (await gqlRequest({
-    query: "query {todos {id content}}",
+    query: "query {todos {id content done}}",
   })) as { data: { todos: TODO[] } };
 
   return (

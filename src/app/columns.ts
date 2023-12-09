@@ -10,4 +10,8 @@ export const columns: ColumnDef<TODO>[] = [
     accessorKey: "content",
     header: "Content",
   },
+  {
+    accessorKey: "done",
+    header: "Done",
+  },
 ];
