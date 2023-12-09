@@ -2,8 +2,8 @@ import { PageTitle } from "@/components/PageTitle";
 import { CreateTodoForm } from "@/features/todo/CreateTodoForm";
 import { TODO } from "@/features/todo/type";
 import { gqlRequest } from "@/functions/gqlRequest";
+import { DataTable } from "../components/ui/data-table";
 import { columns } from "./columns";
-import { DataTable } from "./data-table";
 
 export default async function Home() {
   const { data } = (await gqlRequest({

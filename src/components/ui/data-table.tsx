@@ -36,7 +36,7 @@ export function DataTable<TData, TValue>({
     columns,
     state: {
       columnVisibility: Object.fromEntries(
-        hiddenColumns.map((key) => [key, false])
+        hiddenColumns.map((key) => [key, false]),
       ),
     },
     getCoreRowModel: getCoreRowModel(),
@@ -62,7 +62,7 @@ export function DataTable<TData, TValue>({
                         ? null
                         : flexRender(
                             header.column.columnDef.header,
-                            header.getContext()
+                            header.getContext(),
                           )}
                       {(() => {
                         if (!canSort) return null;
