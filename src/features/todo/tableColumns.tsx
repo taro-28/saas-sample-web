@@ -12,10 +12,6 @@ export const todoTableColumns: ColumnDef<TODO>[] = [
     header: "ID",
   },
   {
-    accessorKey: "content",
-    header: "Content",
-  },
-  {
     accessorKey: "done",
     header: "Done",
     cell: ({ row }) => {
@@ -29,6 +25,10 @@ export const todoTableColumns: ColumnDef<TODO>[] = [
         </Button>
       );
     },
+  },
+  {
+    accessorKey: "content",
+    header: "Content",
   },
   {
     id: "delete",
