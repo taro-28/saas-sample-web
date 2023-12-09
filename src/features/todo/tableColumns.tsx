@@ -21,7 +21,11 @@ export const todoTableColumns: ColumnDef<TODO>[] = [
           size="icon"
           onClick={() => toggleTodoDone(row.original.id, !row.original.done)}
         >
-          {row.original.done ? <CheckCircle /> : <CircleDashed />}
+          {row.original.done ? (
+            <CheckCircle className="text-green-500" />
+          ) : (
+            <CircleDashed />
+          )}
         </Button>
       );
     },
