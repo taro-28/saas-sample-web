@@ -1,6 +1,6 @@
 "use client";
 
-import { TODO } from "@/features/todo";
+import { TODO } from "@/features/todo/type";
 import { ColumnDef } from "@tanstack/react-table";
 
 export const columns: ColumnDef<TODO>[] = [
