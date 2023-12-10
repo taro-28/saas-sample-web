@@ -4,6 +4,7 @@ import { deleteTodo } from "@/features/todo/delete";
 import { TODO } from "@/features/todo/type";
 import { ColumnDef } from "@tanstack/react-table";
 import { CheckCircle, CircleDashed, Trash2 } from "lucide-react";
+import { useOptimistic } from "react";
 import { toggleTodoDone } from "./toggleDone";
 
 export const todoTableColumns: ColumnDef<TODO>[] = [
@@ -14,14 +15,26 @@ export const todoTableColumns: ColumnDef<TODO>[] = [
   {
     accessorKey: "done",
     header: "Done",
-    cell: ({ row }) => {
+    cell: ({
+      row: {
+        original: { id, done },
+      },
+    }) => {
+      const [optimisticDone, toggleOptimisticDone] = useOptimistic(
+        done,
+        (_, done: boolean) => done
+      );
+
       return (
         <Button
           variant="ghost"
           size="icon"
-          onClick={() => toggleTodoDone(row.original.id, !row.original.done)}
+          onClick={async () => {
+            toggleOptimisticDone(!done);
+            await toggleTodoDone(id, !done);
+          }}
         >
-          {row.original.done ? (
+          {optimisticDone ? (
             <CheckCircle className="text-green-500" />
           ) : (
             <CircleDashed />
