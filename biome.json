@@ -17,6 +17,9 @@
       },
       "nursery": {
         "noDefaultExport": "off"
+      },
+      "complexity": {
+        "noForEach": "off"
       }
     }
   },
