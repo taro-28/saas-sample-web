@@ -21,6 +21,6 @@
     }
   },
   "files": {
-    "ignore": ["node_modules", ".next"]
+    "ignore": ["node_modules", ".next", "report-bundle-size.js"]
   }
 }
