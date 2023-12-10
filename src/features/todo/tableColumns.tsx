@@ -1,10 +1,18 @@
 "use client";
+import { start } from "repl";
 import { Button } from "@/components/ui/button";
 import { deleteTodo } from "@/features/todo/delete";
 import { TODO } from "@/features/todo/type";
 import { ColumnDef } from "@tanstack/react-table";
-import { CheckCircle, CircleDashed, Trash2 } from "lucide-react";
-import { useOptimistic } from "react";
+import {
+  CheckCircle,
+  CircleDashed,
+  Loader,
+  Loader2,
+  Trash2,
+} from "lucide-react";
+import { useOptimistic, useTransition } from "react";
+import { useFormState } from "react-dom";
 import { toggleTodoDone } from "./toggleDone";
 
 export const todoTableColumns: ColumnDef<TODO>[] = [
@@ -50,13 +58,20 @@ export const todoTableColumns: ColumnDef<TODO>[] = [
   {
     id: "delete",
     cell: ({ row }) => {
+      const [isPending, startTransition] = useTransition();
+
       return (
         <Button
           variant="ghost"
           size="icon"
-          onClick={() => deleteTodo(row.original.id)}
+          disabled={isPending}
+          onClick={() => startTransition(() => deleteTodo(row.original.id))}
         >
-          <Trash2 className="h-5 w-5" />
+          {isPending ? (
+            <Loader className="animate-spin h-5 w-5" />
+          ) : (
+            <Trash2 className="h-5 w-5" />
+          )}
         </Button>
       );
     },
