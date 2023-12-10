@@ -11,7 +11,13 @@
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": true
+      "all": true,
+      "style": {
+        "useNamingConvention": "off"
+      },
+      "nursery": {
+        "noDefaultExport": "off"
+      }
     }
   },
   "files": {

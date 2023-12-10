@@ -1,18 +1,10 @@
 "use client";
-import { start } from "repl";
 import { Button } from "@/components/ui/button";
 import { deleteTodo } from "@/features/todo/delete";
 import { TODO } from "@/features/todo/type";
 import { ColumnDef } from "@tanstack/react-table";
-import {
-  CheckCircle,
-  CircleDashed,
-  Loader,
-  Loader2,
-  Trash2,
-} from "lucide-react";
+import { CheckCircle, CircleDashed, Loader, Trash2 } from "lucide-react";
 import { useOptimistic, useTransition } from "react";
-import { useFormState } from "react-dom";
 import { toggleTodoDone } from "./toggleDone";
 
 export const todoTableColumns: ColumnDef<TODO>[] = [
@@ -23,14 +15,10 @@ export const todoTableColumns: ColumnDef<TODO>[] = [
   {
     accessorKey: "done",
     header: "Done",
-    cell: ({
-      row: {
-        original: { id, done },
-      },
-    }) => {
+    cell: ({ row: { original: { id, done } } }) => {
       const [optimisticDone, toggleOptimisticDone] = useOptimistic(
         done,
-        (_, done: boolean) => done
+        (_, done: boolean) => done,
       );
 
       return (

@@ -8,7 +8,7 @@ const schema = z.object({
   content: z.string().min(1),
 });
 
-export async function createTodo(prevState: unknown, formData: FormData) {
+export async function createTodo(_: unknown, formData: FormData) {
   const validatedFields = schema.safeParse({
     content: formData.get("content"),
   });

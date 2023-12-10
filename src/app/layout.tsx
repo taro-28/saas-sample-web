@@ -2,6 +2,7 @@ import { APP_NAME } from "@/consts";
 import { ClerkProvider, UserButton } from "@clerk/nextjs";
 import type { Metadata } from "next";
 import NextLink from "next/link";
+import { ReactNode } from "react";
 import { NavigationItemLink } from "./NavigationItemLink";
 import "./globals.css";
 
@@ -15,7 +16,7 @@ const navItems = [{ href: "/", label: "Home" }] as const;
 export default async function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   return (
     <ClerkProvider>

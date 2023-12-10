@@ -2,7 +2,6 @@
 
 import {
   ColumnDef,
-  VisibilityState,
   flexRender,
   getCoreRowModel,
   getSortedRowModel,
@@ -65,7 +64,9 @@ export function DataTable<TData, TValue>({
                             header.getContext(),
                           )}
                       {(() => {
-                        if (!canSort) return null;
+                        if (!canSort) {
+                          return null;
+                        }
 
                         const className = "w-4 h-4 ml-1";
                         switch (header.column.getIsSorted()) {
