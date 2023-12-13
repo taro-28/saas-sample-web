@@ -15,10 +15,14 @@ export const todoTableColumns: ColumnDef<TODO>[] = [
   {
     accessorKey: "done",
     header: "Done",
-    cell: ({ row: { original: { id, done } } }) => {
+    cell: ({
+      row: {
+        original: { id, done },
+      },
+    }) => {
       const [optimisticDone, toggleOptimisticDone] = useOptimistic(
         done,
-        (_, done: boolean) => done,
+        (_, done: boolean) => done
       );
 
       return (
@@ -63,5 +67,10 @@ export const todoTableColumns: ColumnDef<TODO>[] = [
         </Button>
       );
     },
+  },
+  {
+    accessorKey: "createdAt",
+    header: "Created At",
+    cell: ({ row }) => new Date(row.original.createdAt * 1000).toLocaleString(),
   },
 ];

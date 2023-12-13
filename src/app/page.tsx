@@ -7,7 +7,7 @@ import { todoTableColumns } from "../features/todo/tableColumns";
 
 export default async function Home() {
   const { data } = (await gqlRequest({
-    query: "query {todos {id content done}}",
+    query: "query {todos {id content done createdAt}}",
   })) as { data: { todos: TODO[] } };
 
   return (
