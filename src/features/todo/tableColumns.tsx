@@ -1,14 +1,14 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { deleteTodo } from "@/features/todo/delete";
-import { TODO } from "@/features/todo/type";
+import { Todo } from "@/gql/graphql";
 import { Temporal } from "@js-temporal/polyfill";
 import { ColumnDef } from "@tanstack/react-table";
 import { CheckCircle, CircleDashed, Loader, Trash2 } from "lucide-react";
 import { useOptimistic, useTransition } from "react";
 import { toggleTodoDone } from "./toggleDone";
 
-export const todoTableColumns: ColumnDef<TODO>[] = [
+export const todoTableColumns: ColumnDef<Todo>[] = [
   {
     accessorKey: "id",
     header: "ID",

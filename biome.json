@@ -24,6 +24,6 @@
     }
   },
   "files": {
-    "ignore": ["node_modules", ".next", "report-bundle-size.js"]
+    "ignore": ["node_modules", ".next", "report-bundle-size.js", "gql/**/*"]
   }
 }
