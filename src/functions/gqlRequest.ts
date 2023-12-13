@@ -2,9 +2,11 @@ import { GoogleAuth } from "google-auth-library";
 
 const serviceAccountJsonString = process.env.SERVICE_ACCOUNT_JSON;
 
-export const apiUrl = process.env.API_URL ?? "";
+const apiUrl = process.env.API_URL ?? "";
 
-export async function gqlRequest(query: string) {
+type Props = { query: string };
+
+export async function gqlRequest({ query }: Props) {
   if (!serviceAccountJsonString) {
     throw new Error(
       "The $SERVICE_ACCOUNT_JSON environment variable was not found",
