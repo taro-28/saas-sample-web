@@ -7,7 +7,7 @@ import { todoTableColumns } from "../features/todo/tableColumns";
 
 export default async function Home() {
   const { data } = (await gqlRequest({
-    query: "query {todos {id content done}}",
+    query: "query {todos {id content done createdAt}}",
   })) as { data: { todos: TODO[] } };
 
   return (
@@ -18,6 +18,10 @@ export default async function Home() {
         columns={todoTableColumns}
         data={data.todos}
         hiddenColumns={["id"]}
+        initialSorting={[
+          { id: "done", desc: false },
+          { id: "createdAt", desc: true },
+        ]}
       />
     </div>
   );
