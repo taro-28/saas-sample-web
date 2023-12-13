@@ -18,6 +18,10 @@ export default async function Home() {
         columns={todoTableColumns}
         data={data.todos}
         hiddenColumns={["id"]}
+        initialSorting={[
+          { id: "done", desc: false },
+          { id: "createdAt", desc: true },
+        ]}
       />
     </div>
   );

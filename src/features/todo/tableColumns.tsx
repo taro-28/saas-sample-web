@@ -48,6 +48,11 @@ export const todoTableColumns: ColumnDef<TODO>[] = [
     header: "Content",
   },
   {
+    accessorKey: "createdAt",
+    header: "Created At",
+    cell: ({ row }) => new Date(row.original.createdAt * 1000).toLocaleString(),
+  },
+  {
     id: "delete",
     cell: ({ row }) => {
       const [isPending, startTransition] = useTransition();
@@ -67,10 +72,5 @@ export const todoTableColumns: ColumnDef<TODO>[] = [
         </Button>
       );
     },
-  },
-  {
-    accessorKey: "createdAt",
-    header: "Created At",
-    cell: ({ row }) => new Date(row.original.createdAt * 1000).toLocaleString(),
   },
 ];

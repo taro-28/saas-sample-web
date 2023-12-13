@@ -2,6 +2,7 @@
 
 import {
   ColumnDef,
+  SortingState,
   flexRender,
   getCoreRowModel,
   getSortedRowModel,
@@ -18,25 +19,31 @@ import {
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
 import { ArrowUpDown, MoveDown, MoveUp } from "lucide-react";
+import { useState } from "react";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   hiddenColumns?: (keyof TData)[];
+  initialSorting?: SortingState;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
   hiddenColumns = [],
+  initialSorting = [],
 }: DataTableProps<TData, TValue>) {
+  const [sorting, setSorting] = useState<SortingState>(initialSorting);
   const table = useReactTable({
     data,
     columns,
+    onSortingChange: setSorting,
     state: {
       columnVisibility: Object.fromEntries(
-        hiddenColumns.map((key) => [key, false]),
+        hiddenColumns.map((key) => [key, false])
       ),
+      sorting,
     },
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
@@ -61,7 +68,7 @@ export function DataTable<TData, TValue>({
                         ? null
                         : flexRender(
                             header.column.columnDef.header,
-                            header.getContext(),
+                            header.getContext()
                           )}
                       {(() => {
                         if (!canSort) {
