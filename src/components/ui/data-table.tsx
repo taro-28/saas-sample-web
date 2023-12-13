@@ -41,7 +41,7 @@ export function DataTable<TData, TValue>({
     onSortingChange: setSorting,
     state: {
       columnVisibility: Object.fromEntries(
-        hiddenColumns.map((key) => [key, false])
+        hiddenColumns.map((key) => [key, false]),
       ),
       sorting,
     },
@@ -68,7 +68,7 @@ export function DataTable<TData, TValue>({
                         ? null
                         : flexRender(
                             header.column.columnDef.header,
-                            header.getContext()
+                            header.getContext(),
                           )}
                       {(() => {
                         if (!canSort) {

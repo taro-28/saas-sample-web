@@ -15,14 +15,10 @@ export const todoTableColumns: ColumnDef<TODO>[] = [
   {
     accessorKey: "done",
     header: "Done",
-    cell: ({
-      row: {
-        original: { id, done },
-      },
-    }) => {
+    cell: ({ row: { original: { id, done } } }) => {
       const [optimisticDone, toggleOptimisticDone] = useOptimistic(
         done,
-        (_, done: boolean) => done
+        (_, done: boolean) => done,
       );
 
       return (
