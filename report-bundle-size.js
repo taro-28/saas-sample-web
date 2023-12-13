@@ -8,10 +8,10 @@
 // edited to work with the appdir by @raphaelbadia
 // copied from https://gist.github.com/raphaelbadia/1fbc948928378a4ce0e1ce90923263ae#file-report-bundle-size-js
 
-const path = require("path");
-const fs = require("fs");
-const gzSize = require("gzip-size");
-const mkdirp = require("mkdirp");
+import path from "path";
+import fs from "fs";
+import gzSize from "gzip-size";
+import mkdirp from "mkdirp";
 
 // Pull options from `package.json`
 const options = getOptions();
