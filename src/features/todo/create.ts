@@ -19,11 +19,12 @@ export async function createTodo(_: unknown, formData: FormData) {
   }
 
   await gqlRequest({
-    query: `mutation createTodo {
-            createTodo(input: {content: "${validatedFields.data.content}"}) {
-              id
-            }
-          }`,
+    query: /* GraphQL */ `
+  mutation createTodo {
+    createTodo(input: {content: "${validatedFields.data.content}"}) {
+      id
+    }
+  }`,
   });
 
   revalidatePath("/");
