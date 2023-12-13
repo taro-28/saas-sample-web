@@ -8,8 +8,8 @@
 // edited to work with the appdir by @raphaelbadia
 // copied from https://gist.github.com/raphaelbadia/1fbc948928378a4ce0e1ce90923263ae#file-report-bundle-size-js
 
-import path from "path";
 import fs from "fs";
+import path from "path";
 import gzSize from "gzip-size";
 import mkdirp from "mkdirp";
 
