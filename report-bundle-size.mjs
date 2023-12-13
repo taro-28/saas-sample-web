@@ -10,7 +10,7 @@
 
 import fs from "fs";
 import path from "path";
-import gzSize from "gzip-size";
+import { gzipSize } from "gzip-size";
 import mkdirp from "mkdirp";
 
 // Pull options from `package.json`
@@ -122,7 +122,7 @@ function getScriptSize(scriptPath) {
   } else {
     const textContent = fs.readFileSync(p, encoding);
     rawSize = Buffer.byteLength(textContent, encoding);
-    gzipSize = gzSize.sync(textContent);
+    gzipSize = gzipSize.sync(textContent);
     memoryCache[p] = [rawSize, gzipSize];
   }
 
