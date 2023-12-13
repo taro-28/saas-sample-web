@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { deleteTodo } from "@/features/todo/delete";
 import { TODO } from "@/features/todo/type";
+import { Temporal } from "@js-temporal/polyfill";
 import { ColumnDef } from "@tanstack/react-table";
 import { CheckCircle, CircleDashed, Loader, Trash2 } from "lucide-react";
 import { useOptimistic, useTransition } from "react";
@@ -46,7 +47,10 @@ export const todoTableColumns: ColumnDef<TODO>[] = [
   {
     accessorKey: "createdAt",
     header: "Created At",
-    cell: ({ row }) => new Date(row.original.createdAt * 1000).toLocaleString(),
+    cell: ({ row }) =>
+      Temporal.Instant.fromEpochSeconds(row.original.createdAt).toLocaleString(
+        "ja-JP",
+      ),
   },
   {
     id: "delete",
