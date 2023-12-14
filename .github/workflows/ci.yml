@@ -14,19 +14,16 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
         with:
-          node-version: latest
+          bun-version: latest
       - name: Cache node_modules
         id: node_modules_cache_id
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('**/bun.lockb') }}
-      - name: Setup Bun
-        if: steps.node_modules_cache_id.outputs.cache-hit != 'true'
-        uses: oven-sh/setup-bun@v1
+          key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lockb') }}
       - name: Install Dependencies
         run: bun i
       - name: Setup Biome
