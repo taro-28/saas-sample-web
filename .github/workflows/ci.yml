@@ -23,7 +23,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/bun.lockb') }}
       - name: Setup Bun
         if: steps.node_modules_cache_id.outputs.cache-hit != 'true'
         uses: oven-sh/setup-bun@v1
