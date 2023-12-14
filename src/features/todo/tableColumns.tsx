@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { deleteTodo } from "@/features/todo/delete";
-import { Todo } from "@/gql/graphql";
+import { Todo } from "@/gql/generated";
 import { Temporal } from "@js-temporal/polyfill";
 import { ColumnDef } from "@tanstack/react-table";
 import { CheckCircle, CircleDashed, Loader, Trash2 } from "lucide-react";
