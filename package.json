@@ -6,12 +6,15 @@
     "dev": "next dev --turbo",
     "build": "next build",
     "start": "next start",
+    "generate": "graphql-codegen",
     "format": "bunx @biomejs/biome format . --write",
     "lint": "bunx @biomejs/biome lint .",
     "lint-fix": "bunx @biomejs/biome lint . --apply",
-    "check": "bunx @biomejs/biome check . --apply",
-    "generate": "graphql-codegen",
-    "knip": "knip"
+    "check": "bunx @biomejs/biome check .",
+    "check-fix": "bunx @biomejs/biome check . --apply",
+    "type-check": "tsc --noEmit",
+    "knip": "knip",
+    "all-check": "bun check && bun type-check && bun knip"
   },
   "dependencies": {
     "@clerk/nextjs": "^4.27.2",
