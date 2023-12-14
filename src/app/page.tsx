@@ -1,11 +1,10 @@
 import { PageTitle } from "@/components/PageTitle";
 import { CreateTodoForm } from "@/features/todo/CreateForm";
-import { gqlRequest } from "@/functions/gqlRequest";
-import { Todo } from "@/gql/graphql";
+import { getGqlClient } from "@/functions/gqlRequest";
 import { DataTable } from "../components/ui/data-table";
 import { todoTableColumns } from "../features/todo/tableColumns";
 
-const query = /* GraphQL */ `
+/* GraphQL */ `
   query TodoPage {
     todos {
       id
@@ -17,7 +16,7 @@ const query = /* GraphQL */ `
 `;
 
 export default async function Home() {
-  const { data } = (await gqlRequest({ query })) as { data: { todos: Todo[] } };
+  const { todos } = await (await getGqlClient()).TodoPage();
 
   return (
     <div className="w-full space-y-4">
@@ -25,7 +24,7 @@ export default async function Home() {
       <CreateTodoForm />
       <DataTable
         columns={todoTableColumns}
-        data={data.todos}
+        data={todos}
         hiddenColumns={["id"]}
         initialSorting={[
           { id: "done", desc: false },
