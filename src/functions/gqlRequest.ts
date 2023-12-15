@@ -7,7 +7,7 @@ const serviceAccountJsonString = process.env.SERVICE_ACCOUNT_JSON;
 
 const apiUrl = process.env.API_URL ?? "";
 
-export const registerGqlClient = (
+const registerGqlClient = (
   makeClient: () => Promise<ReturnType<typeof getSdk>>,
 ) => {
   const getClient = cache(makeClient);

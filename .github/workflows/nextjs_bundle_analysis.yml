@@ -24,15 +24,20 @@ jobs:
   analyze:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Install Node.js
-        uses: actions/setup-node@v4
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
         with:
-          node-version: latest
-
-      - uses: oven-sh/setup-bun@v1
-      - run: bun i
+          bun-version: latest
+      - name: Cache node_modules
+        id: node_modules_cache_id
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lockb') }}
+      - name: Install Dependencies
+        run: bun i
 
       - name: Restore next build
         uses: actions/cache@v3
@@ -53,7 +58,7 @@ jobs:
       # Here's the first place where next-bundle-analysis' own script is used
       # This step pulls the raw bundle stats for the current bundle
       - name: Analyze bundle
-        run: node report-bundle-size.js
+        run: bun report-bundle-size.js
 
       - name: Upload bundle
         uses: actions/upload-artifact@v4
