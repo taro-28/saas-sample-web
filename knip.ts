@@ -5,6 +5,8 @@ const config = {
     "@biomejs/biome",
     "@radix-ui/react-slot",
     "class-variance-authority",
+    "gzip-size",
+    "mkdirp",
   ],
 };
 
