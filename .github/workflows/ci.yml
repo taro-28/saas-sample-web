@@ -31,4 +31,4 @@ jobs:
       - name: Run Biome
         run: biome ci .
       - name: Typecheck
-        run: bun typecheck
+        run: bun type-check
