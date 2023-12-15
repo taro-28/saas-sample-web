@@ -1,11 +1,15 @@
 "use server";
-import { gqlRequest } from "@/functions/gqlRequest";
+import { getGqlClient } from "@/functions/gqlRequest";
 import { revalidatePath } from "next/cache";
 
+/* GraphQL */ `
+mutation deleteTodo($id: ID!) {
+  deleteTodo(id: $id)
+}
+`;
+
 export const deleteTodo = async (id: string) => {
-  await gqlRequest({
-    query: `mutation {deleteTodo(id: "${id}")}`,
-  });
+  (await getGqlClient()).deleteTodo({ id });
 
   revalidatePath("/");
 };

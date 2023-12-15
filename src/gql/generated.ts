@@ -67,10 +67,27 @@ export type TodoPageQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type TodoPageQuery = { __typename?: 'Query', todos: Array<{ __typename?: 'Todo', id: string, content: string, done: boolean, createdAt: number }> };
 
-export type CreateTodoMutationVariables = Exact<{ [key: string]: never; }>;
+export type CreateTodoMutationVariables = Exact<{
+  content: Scalars['String']['input'];
+}>;
 
 
 export type CreateTodoMutation = { __typename?: 'Mutation', createTodo: { __typename?: 'Todo', id: string } };
+
+export type DeleteTodoMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type DeleteTodoMutation = { __typename?: 'Mutation', deleteTodo: string };
+
+export type ToggleDoneTodoMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+  done: Scalars['Boolean']['input'];
+}>;
+
+
+export type ToggleDoneTodoMutation = { __typename?: 'Mutation', updateTodo: { __typename?: 'Todo', id: string } };
 
 
 export const TodoPageDocument = gql`
@@ -84,8 +101,20 @@ export const TodoPageDocument = gql`
 }
     `;
 export const CreateTodoDocument = gql`
-    mutation createTodo {
-  createTodo(input: {content: ""}) {
+    mutation createTodo($content: String!) {
+  createTodo(input: {content: $content}) {
+    id
+  }
+}
+    `;
+export const DeleteTodoDocument = gql`
+    mutation deleteTodo($id: ID!) {
+  deleteTodo(id: $id)
+}
+    `;
+export const ToggleDoneTodoDocument = gql`
+    mutation toggleDoneTodo($id: ID!, $done: Boolean!) {
+  updateTodo(input: {id: $id, done: $done}) {
     id
   }
 }
@@ -101,8 +130,14 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     TodoPage(variables?: TodoPageQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<TodoPageQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<TodoPageQuery>(TodoPageDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'TodoPage', 'query');
     },
-    createTodo(variables?: CreateTodoMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<CreateTodoMutation> {
+    createTodo(variables: CreateTodoMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<CreateTodoMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<CreateTodoMutation>(CreateTodoDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'createTodo', 'mutation');
+    },
+    deleteTodo(variables: DeleteTodoMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<DeleteTodoMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<DeleteTodoMutation>(DeleteTodoDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'deleteTodo', 'mutation');
+    },
+    toggleDoneTodo(variables: ToggleDoneTodoMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<ToggleDoneTodoMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<ToggleDoneTodoMutation>(ToggleDoneTodoDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'toggleDoneTodo', 'mutation');
     }
   };
 }
