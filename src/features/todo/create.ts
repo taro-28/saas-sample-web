@@ -1,8 +1,16 @@
 "use server";
 
-import { gqlRequest } from "@/functions/gqlRequest";
+import { getGqlClient } from "@/functions/gqlRequest";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
+
+/* GraphQL */ `
+mutation createTodo($content: String!) {
+  createTodo(input: {content: $content}) {
+      id
+    }
+}
+`;
 
 const schema = z.object({
   content: z.string().min(1),
@@ -18,13 +26,8 @@ export async function createTodo(_: unknown, formData: FormData) {
     return { message: validatedFields.error.message };
   }
 
-  await gqlRequest({
-    query: /* GraphQL */ `
-  mutation createTodo {
-    createTodo(input: {content: "${validatedFields.data.content}"}) {
-      id
-    }
-  }`,
+  await (await getGqlClient()).createTodo({
+    content: validatedFields.data.content,
   });
 
   revalidatePath("/");

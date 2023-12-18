@@ -5,8 +5,8 @@ import { DataTable } from "../components/ui/data-table";
 import { todoTableColumns } from "../features/todo/tableColumns";
 
 /* GraphQL */ `
-  query TodoPage {
-    todos {
+query TodoPage {
+  todos {
       id
       content
       done
