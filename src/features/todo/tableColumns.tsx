@@ -6,7 +6,7 @@ import { Temporal } from "@js-temporal/polyfill";
 import { ColumnDef } from "@tanstack/react-table";
 import { CheckCircle, CircleDashed, Loader, Trash2 } from "lucide-react";
 import { useOptimistic, useTransition } from "react";
-import { toggleTodoDone } from "./toggleDone";
+import { updateTodoDone } from "./toggleDone";
 
 export const todoTableColumns: ColumnDef<Todo>[] = [
   {
@@ -16,10 +16,14 @@ export const todoTableColumns: ColumnDef<Todo>[] = [
   {
     accessorKey: "done",
     header: "Done",
-    cell: ({ row: { original: { id, done } } }) => {
+    cell: ({
+      row: {
+        original: { id, done },
+      },
+    }) => {
       const [optimisticDone, toggleOptimisticDone] = useOptimistic(
         done,
-        (_, done: boolean) => done,
+        (_, done: boolean) => done
       );
 
       return (
@@ -28,7 +32,7 @@ export const todoTableColumns: ColumnDef<Todo>[] = [
           size="icon"
           onClick={async () => {
             toggleOptimisticDone(!done);
-            await toggleTodoDone(id, !done);
+            await updateTodoDone(id, !done);
           }}
         >
           {optimisticDone ? (
@@ -49,7 +53,7 @@ export const todoTableColumns: ColumnDef<Todo>[] = [
     header: "Created At",
     cell: ({ row }) =>
       Temporal.Instant.fromEpochSeconds(row.original.createdAt).toLocaleString(
-        "ja-JP",
+        "ja-JP"
       ),
   },
   {

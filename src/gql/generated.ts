@@ -17,15 +17,37 @@ export type Scalars = {
   Float: { input: number; output: number; }
 };
 
+export type Category = {
+  __typename?: 'Category';
+  createdAt: Scalars['Int']['output'];
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+  todos: Array<Todo>;
+};
+
+export type CreateCategoryInput = {
+  name: Scalars['String']['input'];
+};
+
 export type CreateTodoInput = {
+  categoryId?: InputMaybe<Scalars['ID']['input']>;
   content: Scalars['String']['input'];
 };
 
 export type Mutation = {
   __typename?: 'Mutation';
+  createCategory: Category;
   createTodo: Todo;
+  deleteCategory: Scalars['ID']['output'];
   deleteTodo: Scalars['ID']['output'];
+  updateCategory: Category;
   updateTodo: Todo;
+  updateTodoDone: Todo;
+};
+
+
+export type MutationCreateCategoryArgs = {
+  input: CreateCategoryInput;
 };
 
 
@@ -34,8 +56,18 @@ export type MutationCreateTodoArgs = {
 };
 
 
+export type MutationDeleteCategoryArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
 export type MutationDeleteTodoArgs = {
   id: Scalars['ID']['input'];
+};
+
+
+export type MutationUpdateCategoryArgs = {
+  input: UpdateCategoryInput;
 };
 
 
@@ -43,22 +75,39 @@ export type MutationUpdateTodoArgs = {
   input: UpdateTodoInput;
 };
 
+
+export type MutationUpdateTodoDoneArgs = {
+  input: UpdateTodoDoneInput;
+};
+
 export type Query = {
   __typename?: 'Query';
+  categories: Array<Category>;
   todos: Array<Todo>;
 };
 
 export type Todo = {
   __typename?: 'Todo';
+  category?: Maybe<Category>;
   content: Scalars['String']['output'];
   createdAt: Scalars['Int']['output'];
   done: Scalars['Boolean']['output'];
   id: Scalars['ID']['output'];
 };
 
+export type UpdateCategoryInput = {
+  id: Scalars['ID']['input'];
+  name: Scalars['String']['input'];
+};
+
+export type UpdateTodoDoneInput = {
+  done: Scalars['Boolean']['input'];
+  id: Scalars['ID']['input'];
+};
+
 export type UpdateTodoInput = {
-  content?: InputMaybe<Scalars['String']['input']>;
-  done?: InputMaybe<Scalars['Boolean']['input']>;
+  categoryId?: InputMaybe<Scalars['ID']['input']>;
+  content: Scalars['String']['input'];
   id: Scalars['ID']['input'];
 };
 
@@ -81,13 +130,13 @@ export type DeleteTodoMutationVariables = Exact<{
 
 export type DeleteTodoMutation = { __typename?: 'Mutation', deleteTodo: string };
 
-export type ToggleDoneTodoMutationVariables = Exact<{
+export type UpdateDoneTodoMutationVariables = Exact<{
   id: Scalars['ID']['input'];
   done: Scalars['Boolean']['input'];
 }>;
 
 
-export type ToggleDoneTodoMutation = { __typename?: 'Mutation', updateTodo: { __typename?: 'Todo', id: string } };
+export type UpdateDoneTodoMutation = { __typename?: 'Mutation', updateTodoDone: { __typename?: 'Todo', id: string } };
 
 
 export const TodoPageDocument = gql`
@@ -112,9 +161,9 @@ export const DeleteTodoDocument = gql`
   deleteTodo(id: $id)
 }
     `;
-export const ToggleDoneTodoDocument = gql`
-    mutation toggleDoneTodo($id: ID!, $done: Boolean!) {
-  updateTodo(input: {id: $id, done: $done}) {
+export const UpdateDoneTodoDocument = gql`
+    mutation updateDoneTodo($id: ID!, $done: Boolean!) {
+  updateTodoDone(input: {id: $id, done: $done}) {
     id
   }
 }
@@ -136,8 +185,8 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     deleteTodo(variables: DeleteTodoMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<DeleteTodoMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<DeleteTodoMutation>(DeleteTodoDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'deleteTodo', 'mutation');
     },
-    toggleDoneTodo(variables: ToggleDoneTodoMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<ToggleDoneTodoMutation> {
-      return withWrapper((wrappedRequestHeaders) => client.request<ToggleDoneTodoMutation>(ToggleDoneTodoDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'toggleDoneTodo', 'mutation');
+    updateDoneTodo(variables: UpdateDoneTodoMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<UpdateDoneTodoMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<UpdateDoneTodoMutation>(UpdateDoneTodoDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'updateDoneTodo', 'mutation');
     }
   };
 }
