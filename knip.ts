@@ -4,6 +4,9 @@ const config = {
   ignoreDependencies: [
     "@biomejs/biome",
     "@radix-ui/react-slot",
+    "@radix-ui/react-dialog",
+    "@radix-ui/react-popover",
+    "cmdk",
     "class-variance-authority",
     "gzip-size",
     "mkdirp",

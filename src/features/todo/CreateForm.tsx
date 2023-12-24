@@ -34,7 +34,7 @@ export const CreateTodoForm = ({ categories }: Props) => {
           label: name,
         }))
         .sort((a, b) => a.label.localeCompare(b.label)),
-    [categories]
+    [categories],
   );
 
   return (

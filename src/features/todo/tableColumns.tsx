@@ -28,14 +28,10 @@ export const todoTableColumns: ColumnDef<TodoTableTodoFragment>[] = [
   {
     accessorKey: "done",
     header: "Done",
-    cell: ({
-      row: {
-        original: { id, done },
-      },
-    }) => {
+    cell: ({ row: { original: { id, done } } }) => {
       const [optimisticDone, toggleOptimisticDone] = useOptimistic(
         done,
-        (_, done: boolean) => done
+        (_, done: boolean) => done,
       );
 
       return (
@@ -70,7 +66,7 @@ export const todoTableColumns: ColumnDef<TodoTableTodoFragment>[] = [
     header: "Created At",
     cell: ({ row }) =>
       Temporal.Instant.fromEpochSeconds(row.original.createdAt).toLocaleString(
-        "ja-JP"
+        "ja-JP",
       ),
   },
   {

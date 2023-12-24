@@ -64,7 +64,7 @@ export function Combobox({ name, options }: Props) {
                   <Check
                     className={cn(
                       "mr-2 h-4 w-4",
-                      value === o.value ? "opacity-100" : "opacity-0"
+                      value === o.value ? "opacity-100" : "opacity-0",
                     )}
                   />
                   {o.label}
