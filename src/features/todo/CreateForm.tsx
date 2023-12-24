@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { Combobox } from "@/components/ui/combobox";
 import { Input } from "@/components/ui/input";
 import { Plus } from "lucide-react";
 import { useRef } from "react";
@@ -25,6 +26,10 @@ export const CreateTodoForm = () => {
           name="content"
           placeholder="What needs to be done?"
           required={true}
+        />
+        <Combobox
+          name="category"
+          options={[{ value: "work", label: "Work" }]}
         />
         <Button disabled={pending}>
           <Plus className="mr-1 h-4 w-4" />

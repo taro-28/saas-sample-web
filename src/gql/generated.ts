@@ -117,7 +117,7 @@ export type TodoPageQueryVariables = Exact<{ [key: string]: never; }>;
 export type TodoPageQuery = { __typename?: 'Query', todos: Array<{ __typename?: 'Todo', id: string, content: string, done: boolean, createdAt: number }> };
 
 export type CreateTodoMutationVariables = Exact<{
-  content: Scalars['String']['input'];
+  input: CreateTodoInput;
 }>;
 
 
@@ -150,8 +150,8 @@ export const TodoPageDocument = gql`
 }
     `;
 export const CreateTodoDocument = gql`
-    mutation createTodo($content: String!) {
-  createTodo(input: {content: $content}) {
+    mutation createTodo($input: CreateTodoInput!) {
+  createTodo(input: $input) {
     id
   }
 }
