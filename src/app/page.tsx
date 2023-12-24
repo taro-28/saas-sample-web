@@ -11,6 +11,9 @@ query TodoPage {
       content
       done
       createdAt
+      category {
+        name
+      }
   }
   categories {
     ...CreateTodoFormCategory

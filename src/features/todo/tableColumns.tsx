@@ -1,14 +1,26 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { deleteTodo } from "@/features/todo/delete";
-import { Todo } from "@/gql/generated";
+import { TodoTableTodoFragment } from "@/gql/generated";
 import { Temporal } from "@js-temporal/polyfill";
 import { ColumnDef } from "@tanstack/react-table";
 import { CheckCircle, CircleDashed, Loader, Trash2 } from "lucide-react";
 import { useOptimistic, useTransition } from "react";
 import { updateTodoDone } from "./toggleDone";
 
-export const todoTableColumns: ColumnDef<Todo>[] = [
+/* GraphQL */ `
+fragment TodoTableTodo on Todo {
+  id
+  content
+  done
+  createdAt
+  category {
+    name
+  }
+}
+`;
+
+export const todoTableColumns: ColumnDef<TodoTableTodoFragment>[] = [
   {
     accessorKey: "id",
     header: "ID",
@@ -16,10 +28,14 @@ export const todoTableColumns: ColumnDef<Todo>[] = [
   {
     accessorKey: "done",
     header: "Done",
-    cell: ({ row: { original: { id, done } } }) => {
+    cell: ({
+      row: {
+        original: { id, done },
+      },
+    }) => {
       const [optimisticDone, toggleOptimisticDone] = useOptimistic(
         done,
-        (_, done: boolean) => done,
+        (_, done: boolean) => done
       );
 
       return (
@@ -45,11 +61,16 @@ export const todoTableColumns: ColumnDef<Todo>[] = [
     header: "Content",
   },
   {
+    accessorKey: "category.name",
+    header: "Category",
+    cell: ({ row }) => row.original.category?.name ?? "-",
+  },
+  {
     accessorKey: "createdAt",
     header: "Created At",
     cell: ({ row }) =>
       Temporal.Instant.fromEpochSeconds(row.original.createdAt).toLocaleString(
-        "ja-JP",
+        "ja-JP"
       ),
   },
   {
