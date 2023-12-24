@@ -11,17 +11,23 @@ query TodoPage {
       content
       done
       createdAt
-    }
+      category {
+        name
+      }
   }
+  categories {
+    ...CreateTodoFormCategory
+  }
+}
 `;
 
 export default async function Home() {
-  const { todos } = await (await getGqlClient()).TodoPage();
+  const { todos, categories } = await (await getGqlClient()).TodoPage();
 
   return (
     <div className="w-full space-y-4">
       <PageTitle>Todo</PageTitle>
-      <CreateTodoForm />
+      <CreateTodoForm categories={categories} />
       <DataTable
         columns={todoTableColumns}
         data={todos}
