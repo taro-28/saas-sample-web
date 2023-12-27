@@ -31,7 +31,7 @@ fragment MakeTodoTableColumns on Query {
 type Props = Pick<MakeTodoTableColumnsFragment, "categories">;
 
 export const makeTodoTableColumns: (
-  props: Props
+  props: Props,
 ) => ColumnDef<MakeTodoTableColumnsFragment["todos"][number]>[] = ({
   categories,
 }) => [
@@ -54,7 +54,7 @@ export const makeTodoTableColumns: (
     cell: ({ row: { original } }) => {
       const [optimisticCategory, selectOptimisticCategory] = useOptimistic(
         original.category?.id ?? "",
-        (_, categoryId: string) => categoryId
+        (_, categoryId: string) => categoryId,
       );
       const [_, startTransition] = useTransition();
       return (
@@ -78,7 +78,7 @@ export const makeTodoTableColumns: (
     header: "Created At",
     cell: ({ row }) =>
       Temporal.Instant.fromEpochSeconds(row.original.createdAt).toLocaleString(
-        "ja-JP"
+        "ja-JP",
       ),
   },
   {
