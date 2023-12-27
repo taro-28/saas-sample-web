@@ -42,7 +42,7 @@ export default async function RootLayout({
               ))}
             </ul>
           </nav>
-          <main className="flex justify-center p-4">{children}</main>
+          <main className="flex justify-center py-4 px-6">{children}</main>
           <footer className="col-span-2 mt-auto border-t-2 p-4 text-center">
             {APP_NAME}
           </footer>
