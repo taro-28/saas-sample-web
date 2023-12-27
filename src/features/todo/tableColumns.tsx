@@ -1,13 +1,12 @@
 "use client";
-import { Button } from "@/components/ui/button";
 import { MakeTodoTableColumnsFragment } from "@/gql/generated";
 import { Temporal } from "@js-temporal/polyfill";
 import { ColumnDef } from "@tanstack/react-table";
-import { CheckCircle, CircleDashed } from "lucide-react";
-import { useOptimistic } from "react";
+import { useOptimistic, useTransition } from "react";
 import { CategoryCombobox } from "../category/combobox";
 import { TableDeleteCell } from "./TableDeleteCell";
-import { updateTodoDone } from "./toggleDone";
+import { TableDoneCell } from "./TableDoneCell";
+import { updateTodo } from "./update";
 
 /* GraphQL */ `
 fragment TodoTableTodo on Todo {
@@ -43,33 +42,7 @@ export const makeTodoTableColumns: (
   {
     accessorKey: "done",
     header: "Done",
-    cell: ({
-      row: {
-        original: { id, done },
-      },
-    }) => {
-      const [optimisticDone, toggleOptimisticDone] = useOptimistic(
-        done,
-        (_, done: boolean) => done
-      );
-
-      return (
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={async () => {
-            toggleOptimisticDone(!done);
-            await updateTodoDone(id, !done);
-          }}
-        >
-          {optimisticDone ? (
-            <CheckCircle className="text-green-500" />
-          ) : (
-            <CircleDashed />
-          )}
-        </Button>
-      );
-    },
+    cell: TableDoneCell,
   },
   {
     accessorKey: "content",
@@ -78,13 +51,22 @@ export const makeTodoTableColumns: (
   {
     accessorKey: "category.name",
     header: "Category",
-    cell: ({ row }) => {
+    cell: ({ row: { original } }) => {
+      const [optimisticCategory, selectOptimisticCategory] = useOptimistic(
+        original.category?.id ?? "",
+        (_, categoryId: string) => categoryId
+      );
       return (
         <CategoryCombobox
           categories={categories}
-          value={row.original.category?.id ?? ""}
-          onChange={(value) => {
-            console.log(value);
+          value={optimisticCategory}
+          onChange={async (value) => {
+            selectOptimisticCategory(value);
+            await updateTodo({
+              id: original.id,
+              content: original.content,
+              categoryId: value,
+            });
           }}
         />
       );

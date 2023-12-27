@@ -148,6 +148,13 @@ export type UpdateDoneTodoMutationVariables = Exact<{
 
 export type UpdateDoneTodoMutation = { __typename?: 'Mutation', updateTodoDone: { __typename?: 'Todo', id: string } };
 
+export type UpdateTodoMutationVariables = Exact<{
+  input: UpdateTodoInput;
+}>;
+
+
+export type UpdateTodoMutation = { __typename?: 'Mutation', updateTodo: { __typename?: 'Todo', id: string } };
+
 export const CategoryComboboxFragmentDoc = gql`
     fragment CategoryCombobox on Query {
   categories {
@@ -214,6 +221,13 @@ export const UpdateDoneTodoDocument = gql`
   }
 }
     `;
+export const UpdateTodoDocument = gql`
+    mutation updateTodo($input: UpdateTodoInput!) {
+  updateTodo(input: $input) {
+    id
+  }
+}
+    `;
 
 export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string, operationType?: string) => Promise<T>;
 
@@ -233,6 +247,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     updateDoneTodo(variables: UpdateDoneTodoMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<UpdateDoneTodoMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<UpdateDoneTodoMutation>(UpdateDoneTodoDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'updateDoneTodo', 'mutation');
+    },
+    updateTodo(variables: UpdateTodoMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<UpdateTodoMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<UpdateTodoMutation>(UpdateTodoDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'updateTodo', 'mutation');
     }
   };
 }
