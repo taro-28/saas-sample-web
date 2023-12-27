@@ -1,26 +1,34 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { deleteTodo } from "@/features/todo/delete";
-import { TodoTableTodoFragment } from "@/gql/generated";
+import { MakeTodoTableColumnsFragment } from "@/gql/generated";
 import { Temporal } from "@js-temporal/polyfill";
 import { ColumnDef } from "@tanstack/react-table";
 import { CheckCircle, CircleDashed, Loader, Trash2 } from "lucide-react";
-import { useOptimistic, useTransition } from "react";
+import { useOptimistic, useState, useTransition } from "react";
+import { CategoryCombobox } from "../category/combobox";
 import { updateTodoDone } from "./toggleDone";
 
 /* GraphQL */ `
-fragment TodoTableTodo on Todo {
-  id
-  content
-  done
-  createdAt
-  category {
-    name
+fragment MakeTodoTableColumns on Query {
+  todos {
+    id
+    content
+    done
+    createdAt
+    category {
+      name
+    }
   }
+  ...CategoryCombobox
 }
 `;
 
-export const todoTableColumns: ColumnDef<TodoTableTodoFragment>[] = [
+export const makeTodoTableColumns: (
+  props: Pick<MakeTodoTableColumnsFragment, "categories">,
+) => ColumnDef<MakeTodoTableColumnsFragment["todos"][number]>[] = ({
+  categories,
+}) => [
   {
     accessorKey: "id",
     header: "ID",
@@ -59,7 +67,19 @@ export const todoTableColumns: ColumnDef<TodoTableTodoFragment>[] = [
   {
     accessorKey: "category.name",
     header: "Category",
-    cell: ({ row }) => row.original.category?.name ?? "-",
+    cell: ({ row }) => {
+      const [isEditing, setIsEditing] = useState(false);
+
+      return isEditing ? (
+        <CategoryCombobox name="category" categories={categories} />
+      ) : (
+        <Button variant="ghost" onClick={() => setIsEditing(true)}>
+          {row.original.category?.name ?? "-"}
+        </Button>
+      );
+
+      // return row.original.category?.name ?? "-";
+    },
   },
   {
     accessorKey: "createdAt",
