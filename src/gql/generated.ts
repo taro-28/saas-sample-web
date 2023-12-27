@@ -136,6 +136,8 @@ export type DeleteTodoMutation = { __typename?: 'Mutation', deleteTodo: string }
 
 export type TodoTableFragment = { __typename?: 'Query', todos: Array<{ __typename?: 'Todo', id: string, content: string, done: boolean, createdAt: number, category?: { __typename?: 'Category', id: string, name: string } | null }>, categories: Array<{ __typename?: 'Category', id: string, name: string, createdAt: number }> };
 
+export type TodoTableTodoFragment = { __typename?: 'Todo', id: string, content: string, done: boolean, createdAt: number, category?: { __typename?: 'Category', id: string, name: string } | null };
+
 export type MakeTodoTableColumnsFragment = { __typename?: 'Query', todos: Array<{ __typename?: 'Todo', id: string, content: string, done: boolean, createdAt: number, category?: { __typename?: 'Category', id: string, name: string } | null }>, categories: Array<{ __typename?: 'Category', id: string, name: string, createdAt: number }> };
 
 export type UpdateDoneTodoMutationVariables = Exact<{
@@ -160,21 +162,27 @@ export const CreateTodoFormFragmentDoc = gql`
   ...CategoryCombobox
 }
     ${CategoryComboboxFragmentDoc}`;
+export const TodoTableTodoFragmentDoc = gql`
+    fragment TodoTableTodo on Todo {
+  id
+  content
+  done
+  createdAt
+  category {
+    id
+    name
+  }
+}
+    `;
 export const MakeTodoTableColumnsFragmentDoc = gql`
     fragment MakeTodoTableColumns on Query {
   todos {
-    id
-    content
-    done
-    createdAt
-    category {
-      id
-      name
-    }
+    ...TodoTableTodo
   }
   ...CategoryCombobox
 }
-    ${CategoryComboboxFragmentDoc}`;
+    ${TodoTableTodoFragmentDoc}
+${CategoryComboboxFragmentDoc}`;
 export const TodoTableFragmentDoc = gql`
     fragment TodoTable on Query {
   ...MakeTodoTableColumns

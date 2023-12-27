@@ -1,25 +1,29 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { deleteTodo } from "@/features/todo/delete";
 import { MakeTodoTableColumnsFragment } from "@/gql/generated";
 import { Temporal } from "@js-temporal/polyfill";
 import { ColumnDef } from "@tanstack/react-table";
-import { CheckCircle, CircleDashed, Loader, Trash2 } from "lucide-react";
-import { useOptimistic, useState, useTransition } from "react";
+import { CheckCircle, CircleDashed } from "lucide-react";
+import { useOptimistic } from "react";
 import { CategoryCombobox } from "../category/combobox";
+import { TableDeleteCell } from "./TableDeleteCell";
 import { updateTodoDone } from "./toggleDone";
 
 /* GraphQL */ `
+fragment TodoTableTodo on Todo {
+  id
+  content
+  done
+  createdAt
+  category {
+    id
+    name
+  }
+}
+
 fragment MakeTodoTableColumns on Query {
   todos {
-    id
-    content
-    done
-    createdAt
-    category {
-      id
-      name
-    }
+    ...TodoTableTodo
   }
   ...CategoryCombobox
 }
@@ -96,23 +100,6 @@ export const makeTodoTableColumns: (
   },
   {
     id: "delete",
-    cell: ({ row }) => {
-      const [isPending, startTransition] = useTransition();
-
-      return (
-        <Button
-          variant="ghost"
-          size="icon"
-          disabled={isPending}
-          onClick={() => startTransition(() => deleteTodo(row.original.id))}
-        >
-          {isPending ? (
-            <Loader className="animate-spin h-5 w-5" />
-          ) : (
-            <Trash2 className="h-5 w-5" />
-          )}
-        </Button>
-      );
-    },
+    cell: TableDeleteCell,
   },
 ];
