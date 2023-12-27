@@ -2,7 +2,7 @@
 import { MakeTodoTableColumnsFragment } from "@/gql/generated";
 import { Temporal } from "@js-temporal/polyfill";
 import { ColumnDef } from "@tanstack/react-table";
-import { useOptimistic } from "react";
+import { useOptimistic, useTransition } from "react";
 import { CategoryCombobox } from "../category/combobox";
 import { TableDeleteCell } from "./TableDeleteCell";
 import { TableDoneCell } from "./TableDoneCell";
@@ -56,12 +56,13 @@ export const makeTodoTableColumns: (
         original.category?.id ?? "",
         (_, categoryId: string) => categoryId,
       );
+      const [_, startTransition] = useTransition();
       return (
         <CategoryCombobox
           categories={categories}
           value={optimisticCategory}
           onChange={async (value) => {
-            selectOptimisticCategory(value);
+            startTransition(() => selectOptimisticCategory(value));
             await updateTodo({
               id: original.id,
               content: original.content,
