@@ -9,14 +9,10 @@ import { updateTodoDone } from "./toggleDone";
 
 type Props = CellContext<TodoTableTodoFragment, unknown>;
 
-export const TableDoneCell = ({
-  row: {
-    original: { id, done },
-  },
-}: Props) => {
+export const TableDoneCell = ({ row: { original: { id, done } } }: Props) => {
   const [optimisticDone, toggleOptimisticDone] = useOptimistic(
     done,
-    (_, done: boolean) => done
+    (_, done: boolean) => done,
   );
 
   return (

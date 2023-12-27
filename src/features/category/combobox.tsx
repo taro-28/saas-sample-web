@@ -30,7 +30,7 @@ export const CategoryCombobox = ({
           label: name,
         }))
         .sort((a, b) => a.label.localeCompare(b.label)),
-    [categories]
+    [categories],
   );
   return <Combobox {...props} name={name} options={categoryOptions} />;
 };

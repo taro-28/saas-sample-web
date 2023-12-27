@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { CreateTodoFormFragment } from "@/gql/generated";
 import { Plus } from "lucide-react";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useFormState, useFormStatus } from "react-dom";
 import { CategoryCombobox } from "../category/combobox";
 import { createTodo } from "./create";
@@ -22,6 +22,8 @@ export const CreateTodoForm = ({ categories }: Props) => {
   const { pending } = useFormStatus();
   const formRef = useRef<HTMLFormElement>(null);
 
+  const [categoryValue, setCategoryValue] = useState("");
+
   return (
     <form
       action={async (formData) => {
@@ -36,7 +38,12 @@ export const CreateTodoForm = ({ categories }: Props) => {
           placeholder="What needs to be done?"
           required={true}
         />
-        <CategoryCombobox name="category" categories={categories} />
+        <CategoryCombobox
+          name="category"
+          categories={categories}
+          value={categoryValue}
+          onChange={setCategoryValue}
+        />
         <Button disabled={pending}>
           <Plus className="mr-1 h-4 w-4" />
           Add
