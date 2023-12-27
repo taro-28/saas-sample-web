@@ -2,7 +2,7 @@
 import { MakeTodoTableColumnsFragment } from "@/gql/generated";
 import { Temporal } from "@js-temporal/polyfill";
 import { ColumnDef } from "@tanstack/react-table";
-import { useOptimistic } from "react";
+import { useOptimistic, useTransition } from "react";
 import { CategoryCombobox } from "../category/combobox";
 import { TableDeleteCell } from "./TableDeleteCell";
 import { TableDoneCell } from "./TableDoneCell";
@@ -31,7 +31,7 @@ fragment MakeTodoTableColumns on Query {
 type Props = Pick<MakeTodoTableColumnsFragment, "categories">;
 
 export const makeTodoTableColumns: (
-  props: Props,
+  props: Props
 ) => ColumnDef<MakeTodoTableColumnsFragment["todos"][number]>[] = ({
   categories,
 }) => [
@@ -54,14 +54,15 @@ export const makeTodoTableColumns: (
     cell: ({ row: { original } }) => {
       const [optimisticCategory, selectOptimisticCategory] = useOptimistic(
         original.category?.id ?? "",
-        (_, categoryId: string) => categoryId,
+        (_, categoryId: string) => categoryId
       );
+      const [_, startTransition] = useTransition();
       return (
         <CategoryCombobox
           categories={categories}
           value={optimisticCategory}
           onChange={async (value) => {
-            selectOptimisticCategory(value);
+            startTransition(() => selectOptimisticCategory(value));
             await updateTodo({
               id: original.id,
               content: original.content,
@@ -77,7 +78,7 @@ export const makeTodoTableColumns: (
     header: "Created At",
     cell: ({ row }) =>
       Temporal.Instant.fromEpochSeconds(row.original.createdAt).toLocaleString(
-        "ja-JP",
+        "ja-JP"
       ),
   },
   {
