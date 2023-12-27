@@ -17,6 +17,7 @@ fragment MakeTodoTableColumns on Query {
     done
     createdAt
     category {
+      id
       name
     }
   }
@@ -74,17 +75,15 @@ export const makeTodoTableColumns: (
     accessorKey: "category.name",
     header: "Category",
     cell: ({ row }) => {
-      const [isEditing, setIsEditing] = useState(false);
-
-      return isEditing ? (
-        <CategoryCombobox name="category" categories={categories} />
-      ) : (
-        <Button variant="ghost" onClick={() => setIsEditing(true)}>
-          {row.original.category?.name ?? "-"}
-        </Button>
+      return (
+        <CategoryCombobox
+          categories={categories}
+          value={row.original.category?.id ?? ""}
+          onChange={(value) => {
+            console.log(value);
+          }}
+        />
       );
-
-      // return row.original.category?.name ?? "-";
     },
   },
   {

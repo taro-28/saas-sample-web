@@ -2,7 +2,7 @@
 
 import { Combobox } from "@/components/ui/combobox";
 import { CategoryComboboxFragment } from "@/gql/generated";
-import { useMemo } from "react";
+import { ComponentPropsWithoutRef, useMemo } from "react";
 
 /* GraphQL */ `
 fragment CategoryCombobox on Query {
@@ -14,11 +14,14 @@ fragment CategoryCombobox on Query {
 }
 `;
 
-type Props = {
-  name: string;
-} & CategoryComboboxFragment;
+type Props = CategoryComboboxFragment &
+  Omit<ComponentPropsWithoutRef<typeof Combobox>, "options">;
 
-export const CategoryCombobox = ({ name, categories }: Props) => {
+export const CategoryCombobox = ({
+  categories,
+  name = "category",
+  ...props
+}: Props) => {
   const categoryOptions = useMemo(
     () =>
       categories
@@ -27,7 +30,7 @@ export const CategoryCombobox = ({ name, categories }: Props) => {
           label: name,
         }))
         .sort((a, b) => a.label.localeCompare(b.label)),
-    [categories],
+    [categories]
   );
-  return <Combobox name={name} options={categoryOptions} />;
+  return <Combobox {...props} name={name} options={categoryOptions} />;
 };

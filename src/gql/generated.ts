@@ -114,7 +114,7 @@ export type UpdateTodoInput = {
 export type TodoPageQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type TodoPageQuery = { __typename?: 'Query', categories: Array<{ __typename?: 'Category', id: string, name: string, createdAt: number }>, todos: Array<{ __typename?: 'Todo', id: string, content: string, done: boolean, createdAt: number, category?: { __typename?: 'Category', name: string } | null }> };
+export type TodoPageQuery = { __typename?: 'Query', categories: Array<{ __typename?: 'Category', id: string, name: string, createdAt: number }>, todos: Array<{ __typename?: 'Todo', id: string, content: string, done: boolean, createdAt: number, category?: { __typename?: 'Category', id: string, name: string } | null }> };
 
 export type CategoryComboboxFragment = { __typename?: 'Query', categories: Array<{ __typename?: 'Category', id: string, name: string, createdAt: number }> };
 
@@ -134,9 +134,9 @@ export type DeleteTodoMutationVariables = Exact<{
 
 export type DeleteTodoMutation = { __typename?: 'Mutation', deleteTodo: string };
 
-export type TodoTableFragment = { __typename?: 'Query', todos: Array<{ __typename?: 'Todo', id: string, content: string, done: boolean, createdAt: number, category?: { __typename?: 'Category', name: string } | null }>, categories: Array<{ __typename?: 'Category', id: string, name: string, createdAt: number }> };
+export type TodoTableFragment = { __typename?: 'Query', todos: Array<{ __typename?: 'Todo', id: string, content: string, done: boolean, createdAt: number, category?: { __typename?: 'Category', id: string, name: string } | null }>, categories: Array<{ __typename?: 'Category', id: string, name: string, createdAt: number }> };
 
-export type MakeTodoTableColumnsFragment = { __typename?: 'Query', todos: Array<{ __typename?: 'Todo', id: string, content: string, done: boolean, createdAt: number, category?: { __typename?: 'Category', name: string } | null }>, categories: Array<{ __typename?: 'Category', id: string, name: string, createdAt: number }> };
+export type MakeTodoTableColumnsFragment = { __typename?: 'Query', todos: Array<{ __typename?: 'Todo', id: string, content: string, done: boolean, createdAt: number, category?: { __typename?: 'Category', id: string, name: string } | null }>, categories: Array<{ __typename?: 'Category', id: string, name: string, createdAt: number }> };
 
 export type UpdateDoneTodoMutationVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -168,6 +168,7 @@ export const MakeTodoTableColumnsFragmentDoc = gql`
     done
     createdAt
     category {
+      id
       name
     }
   }

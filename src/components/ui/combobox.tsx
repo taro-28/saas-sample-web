@@ -19,16 +19,17 @@ import {
 import { cn } from "@/lib/utils";
 
 type Props = {
-  name: string;
+  name?: string;
   options: {
     value: string;
     label: string;
   }[];
+  value: string;
+  onChange: (value: string) => void;
 };
 
-export function Combobox({ name, options }: Props) {
+export function Combobox({ name, options, value, onChange }: Props) {
   const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState("");
 
   return (
     <>
@@ -57,14 +58,14 @@ export function Combobox({ name, options }: Props) {
                   key={o.value}
                   value={o.value}
                   onSelect={(currentValue) => {
-                    setValue(currentValue === value ? "" : currentValue);
+                    onChange(currentValue === value ? "" : currentValue);
                     setOpen(false);
                   }}
                 >
                   <Check
                     className={cn(
                       "mr-2 h-4 w-4",
-                      value === o.value ? "opacity-100" : "opacity-0",
+                      value === o.value ? "opacity-100" : "opacity-0"
                     )}
                   />
                   {o.label}
