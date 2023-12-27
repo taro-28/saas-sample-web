@@ -33,7 +33,13 @@ export function Combobox({ name, options, value, onChange }: Props) {
 
   return (
     <>
-      <input value={value} hidden name={name} />
+      <input
+        value={value}
+        hidden
+        name={name}
+        // warningがでるためonChangeを設定しておく
+        onChange={() => null}
+      />
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button
