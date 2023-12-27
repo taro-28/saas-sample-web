@@ -1,12 +1,12 @@
 "use client";
-import { Button } from "@/components/ui/button";
-import { deleteTodo } from "@/features/todo/delete";
-import { TodoTableTodoFragment } from "@/gql/generated";
+import { MakeTodoTableColumnsFragment } from "@/gql/generated";
 import { Temporal } from "@js-temporal/polyfill";
 import { ColumnDef } from "@tanstack/react-table";
-import { CheckCircle, CircleDashed, Loader, Trash2 } from "lucide-react";
-import { useOptimistic, useTransition } from "react";
-import { updateTodoDone } from "./toggleDone";
+import { useOptimistic } from "react";
+import { CategoryCombobox } from "../category/combobox";
+import { TableDeleteCell } from "./TableDeleteCell";
+import { TableDoneCell } from "./TableDoneCell";
+import { updateTodo } from "./update";
 
 /* GraphQL */ `
 fragment TodoTableTodo on Todo {
@@ -15,12 +15,26 @@ fragment TodoTableTodo on Todo {
   done
   createdAt
   category {
+    id
     name
   }
 }
+
+fragment MakeTodoTableColumns on Query {
+  todos {
+    ...TodoTableTodo
+  }
+  ...CategoryCombobox
+}
 `;
 
-export const todoTableColumns: ColumnDef<TodoTableTodoFragment>[] = [
+type Props = Pick<MakeTodoTableColumnsFragment, "categories">;
+
+export const makeTodoTableColumns: (
+  props: Props,
+) => ColumnDef<MakeTodoTableColumnsFragment["todos"][number]>[] = ({
+  categories,
+}) => [
   {
     accessorKey: "id",
     header: "ID",
@@ -28,29 +42,7 @@ export const todoTableColumns: ColumnDef<TodoTableTodoFragment>[] = [
   {
     accessorKey: "done",
     header: "Done",
-    cell: ({ row: { original: { id, done } } }) => {
-      const [optimisticDone, toggleOptimisticDone] = useOptimistic(
-        done,
-        (_, done: boolean) => done,
-      );
-
-      return (
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={async () => {
-            toggleOptimisticDone(!done);
-            await updateTodoDone(id, !done);
-          }}
-        >
-          {optimisticDone ? (
-            <CheckCircle className="text-green-500" />
-          ) : (
-            <CircleDashed />
-          )}
-        </Button>
-      );
-    },
+    cell: TableDoneCell,
   },
   {
     accessorKey: "content",
@@ -59,7 +51,26 @@ export const todoTableColumns: ColumnDef<TodoTableTodoFragment>[] = [
   {
     accessorKey: "category.name",
     header: "Category",
-    cell: ({ row }) => row.original.category?.name ?? "-",
+    cell: ({ row: { original } }) => {
+      const [optimisticCategory, selectOptimisticCategory] = useOptimistic(
+        original.category?.id ?? "",
+        (_, categoryId: string) => categoryId,
+      );
+      return (
+        <CategoryCombobox
+          categories={categories}
+          value={optimisticCategory}
+          onChange={async (value) => {
+            selectOptimisticCategory(value);
+            await updateTodo({
+              id: original.id,
+              content: original.content,
+              categoryId: value,
+            });
+          }}
+        />
+      );
+    },
   },
   {
     accessorKey: "createdAt",
@@ -71,23 +82,6 @@ export const todoTableColumns: ColumnDef<TodoTableTodoFragment>[] = [
   },
   {
     id: "delete",
-    cell: ({ row }) => {
-      const [isPending, startTransition] = useTransition();
-
-      return (
-        <Button
-          variant="ghost"
-          size="icon"
-          disabled={isPending}
-          onClick={() => startTransition(() => deleteTodo(row.original.id))}
-        >
-          {isPending ? (
-            <Loader className="animate-spin h-5 w-5" />
-          ) : (
-            <Trash2 className="h-5 w-5" />
-          )}
-        </Button>
-      );
-    },
+    cell: TableDeleteCell,
   },
 ];
