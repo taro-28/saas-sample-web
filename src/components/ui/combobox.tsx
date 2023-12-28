@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, ChevronsUpDown } from "lucide-react";
+import { Check, ChevronsUpDown, Plus } from "lucide-react";
 import * as React from "react";
 
 import { Button } from "@/components/ui/button";
@@ -30,6 +30,7 @@ type Props = {
 
 export function Combobox({ name, options, value, onChange }: Props) {
   const [open, setOpen] = React.useState(false);
+  const [searchWord, setSearchWord] = React.useState("");
 
   return (
     <>
@@ -56,8 +57,18 @@ export function Combobox({ name, options, value, onChange }: Props) {
         </PopoverTrigger>
         <PopoverContent className="w-[200px] p-0">
           <Command>
-            <CommandInput placeholder={`Search ${name} ...`} />
-            <CommandEmpty>No {name} found.</CommandEmpty>
+            <CommandInput
+              placeholder={`Search ${name} ...`}
+              value={searchWord}
+              onValueChange={setSearchWord}
+            />
+            <CommandEmpty>
+              <Button variant="outline">
+                <Plus className="mr-1 h-4 w-4" />
+                Create
+                <span className="font-bold ml-1">{searchWord}</span>
+              </Button>
+            </CommandEmpty>
             <CommandGroup>
               {options.map((o) => (
                 <CommandItem
@@ -71,7 +82,7 @@ export function Combobox({ name, options, value, onChange }: Props) {
                   <Check
                     className={cn(
                       "mr-2 h-4 w-4",
-                      value === o.value ? "opacity-100" : "opacity-0",
+                      value === o.value ? "opacity-100" : "opacity-0"
                     )}
                   />
                   {o.label}
