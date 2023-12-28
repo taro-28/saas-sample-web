@@ -2,7 +2,8 @@
 
 import { Combobox } from "@/components/ui/combobox";
 import { CategoryComboboxFragment } from "@/gql/generated";
-import { ComponentPropsWithoutRef, useMemo } from "react";
+import { ComponentPropsWithoutRef, useMemo, useTransition } from "react";
+import { createCategory } from "./create";
 
 /* GraphQL */ `
 fragment CategoryCombobox on Query {
@@ -15,7 +16,7 @@ fragment CategoryCombobox on Query {
 `;
 
 type Props = CategoryComboboxFragment &
-  Omit<ComponentPropsWithoutRef<typeof Combobox>, "options">;
+  Omit<ComponentPropsWithoutRef<typeof Combobox>, "options" | "onCreate">;
 
 export const CategoryCombobox = ({
   categories,
@@ -30,7 +31,15 @@ export const CategoryCombobox = ({
           label: name,
         }))
         .sort((a, b) => a.label.localeCompare(b.label)),
-    [categories],
+    [categories]
   );
-  return <Combobox {...props} name={name} options={categoryOptions} />;
+  const [_, startTransition] = useTransition();
+  return (
+    <Combobox
+      {...props}
+      name={name}
+      options={categoryOptions}
+      onCreate={(value) => startTransition(() => createCategory(value))}
+    />
+  );
 };

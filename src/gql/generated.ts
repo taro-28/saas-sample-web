@@ -118,6 +118,13 @@ export type TodoPageQuery = { __typename?: 'Query', categories: Array<{ __typena
 
 export type CategoryComboboxFragment = { __typename?: 'Query', categories: Array<{ __typename?: 'Category', id: string, name: string, createdAt: number }> };
 
+export type CreateCategoryMutationVariables = Exact<{
+  input: CreateCategoryInput;
+}>;
+
+
+export type CreateCategoryMutation = { __typename?: 'Mutation', createCategory: { __typename?: 'Category', id: string } };
+
 export type CreateTodoFormFragment = { __typename?: 'Query', categories: Array<{ __typename?: 'Category', id: string, name: string, createdAt: number }> };
 
 export type CreateTodoMutationVariables = Exact<{
@@ -202,6 +209,13 @@ export const TodoPageDocument = gql`
 }
     ${CreateTodoFormFragmentDoc}
 ${TodoTableFragmentDoc}`;
+export const CreateCategoryDocument = gql`
+    mutation createCategory($input: CreateCategoryInput!) {
+  createCategory(input: $input) {
+    id
+  }
+}
+    `;
 export const CreateTodoDocument = gql`
     mutation createTodo($input: CreateTodoInput!) {
   createTodo(input: $input) {
@@ -238,6 +252,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
   return {
     TodoPage(variables?: TodoPageQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<TodoPageQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<TodoPageQuery>(TodoPageDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'TodoPage', 'query');
+    },
+    createCategory(variables: CreateCategoryMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<CreateCategoryMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<CreateCategoryMutation>(CreateCategoryDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'createCategory', 'mutation');
     },
     createTodo(variables: CreateTodoMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<CreateTodoMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<CreateTodoMutation>(CreateTodoDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'createTodo', 'mutation');
