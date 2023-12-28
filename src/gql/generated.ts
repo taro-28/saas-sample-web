@@ -111,6 +111,11 @@ export type UpdateTodoInput = {
   id: Scalars['ID']['input'];
 };
 
+export type CategoryPageQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CategoryPageQuery = { __typename?: 'Query', categories: Array<{ __typename?: 'Category', id: string, name: string, createdAt: number }> };
+
 export type TodoPageQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -124,6 +129,15 @@ export type CreateCategoryMutationVariables = Exact<{
 
 
 export type CreateCategoryMutation = { __typename?: 'Mutation', createCategory: { __typename?: 'Category', id: string } };
+
+export type DeleteCategoryMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type DeleteCategoryMutation = { __typename?: 'Mutation', deleteCategory: string };
+
+export type CategoryTableFragment = { __typename?: 'Query', categories: Array<{ __typename?: 'Category', id: string, name: string, createdAt: number }> };
 
 export type CreateTodoFormFragment = { __typename?: 'Query', categories: Array<{ __typename?: 'Category', id: string, name: string, createdAt: number }> };
 
@@ -162,6 +176,15 @@ export type UpdateTodoMutationVariables = Exact<{
 
 export type UpdateTodoMutation = { __typename?: 'Mutation', updateTodo: { __typename?: 'Todo', id: string } };
 
+export const CategoryTableFragmentDoc = gql`
+    fragment CategoryTable on Query {
+  categories {
+    id
+    name
+    createdAt
+  }
+}
+    `;
 export const CategoryComboboxFragmentDoc = gql`
     fragment CategoryCombobox on Query {
   categories {
@@ -202,6 +225,11 @@ export const TodoTableFragmentDoc = gql`
   ...MakeTodoTableColumns
 }
     ${MakeTodoTableColumnsFragmentDoc}`;
+export const CategoryPageDocument = gql`
+    query CategoryPage {
+  ...CategoryTable
+}
+    ${CategoryTableFragmentDoc}`;
 export const TodoPageDocument = gql`
     query TodoPage {
   ...CreateTodoForm
@@ -214,6 +242,11 @@ export const CreateCategoryDocument = gql`
   createCategory(input: $input) {
     id
   }
+}
+    `;
+export const DeleteCategoryDocument = gql`
+    mutation deleteCategory($id: ID!) {
+  deleteCategory(id: $id)
 }
     `;
 export const CreateTodoDocument = gql`
@@ -250,11 +283,17 @@ const defaultWrapper: SdkFunctionWrapper = (action, _operationName, _operationTy
 
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
+    CategoryPage(variables?: CategoryPageQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<CategoryPageQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<CategoryPageQuery>(CategoryPageDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'CategoryPage', 'query');
+    },
     TodoPage(variables?: TodoPageQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<TodoPageQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<TodoPageQuery>(TodoPageDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'TodoPage', 'query');
     },
     createCategory(variables: CreateCategoryMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<CreateCategoryMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<CreateCategoryMutation>(CreateCategoryDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'createCategory', 'mutation');
+    },
+    deleteCategory(variables: DeleteCategoryMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<DeleteCategoryMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<DeleteCategoryMutation>(DeleteCategoryDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'deleteCategory', 'mutation');
     },
     createTodo(variables: CreateTodoMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<CreateTodoMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<CreateTodoMutation>(CreateTodoDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'createTodo', 'mutation');
