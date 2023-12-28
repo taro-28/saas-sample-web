@@ -34,7 +34,7 @@ export const CategoryCombobox = ({
           label: name,
         }))
         .sort((a, b) => a.label.localeCompare(b.label)),
-    [categories]
+    [categories],
   );
   const [isPending, startTransition] = useTransition();
   return (
