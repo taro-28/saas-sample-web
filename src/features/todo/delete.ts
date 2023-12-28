@@ -10,6 +10,5 @@ mutation deleteTodo($id: ID!) {
 
 export const deleteTodo = async (id: string) => {
   (await getGqlClient()).deleteTodo({ id });
-
   revalidatePath("/");
 };
