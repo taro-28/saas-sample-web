@@ -11,7 +11,10 @@ export const metadata: Metadata = {
   description: "A sample SaaS application built with Next.js",
 };
 
-const navItems = [{ href: "/", label: "Home" }] as const;
+const navItems = [
+  { href: "/", label: "Home" },
+  { href: "/categories", label: "Categories" },
+] as const;
 
 export default async function RootLayout({
   children,
