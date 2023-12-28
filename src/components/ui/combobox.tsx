@@ -26,10 +26,18 @@ type Props = {
   }[];
   value: string;
   onChange: (value: string) => void;
+  isCreating: boolean;
   onCreate: (value: string) => void;
 };
 
-export function Combobox({ name, options, value, onChange, onCreate }: Props) {
+export function Combobox({
+  name,
+  options,
+  value,
+  onChange,
+  isCreating,
+  onCreate,
+}: Props) {
   const [open, setOpen] = React.useState(false);
   const [searchWord, setSearchWord] = React.useState("");
 
@@ -64,7 +72,11 @@ export function Combobox({ name, options, value, onChange, onCreate }: Props) {
               onValueChange={setSearchWord}
             />
             <CommandEmpty>
-              <Button variant="outline" onClick={() => onCreate(searchWord)}>
+              <Button
+                variant="outline"
+                onClick={() => onCreate(searchWord)}
+                disabled={isCreating}
+              >
                 <Plus className="mr-1 h-4 w-4" />
                 Create
                 <span className="font-bold ml-1">{searchWord}</span>

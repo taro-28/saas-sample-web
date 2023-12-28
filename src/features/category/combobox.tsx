@@ -16,7 +16,10 @@ fragment CategoryCombobox on Query {
 `;
 
 type Props = CategoryComboboxFragment &
-  Omit<ComponentPropsWithoutRef<typeof Combobox>, "options" | "onCreate">;
+  Omit<
+    ComponentPropsWithoutRef<typeof Combobox>,
+    "options" | "onCreate" | "isCreating"
+  >;
 
 export const CategoryCombobox = ({
   categories,
@@ -33,12 +36,13 @@ export const CategoryCombobox = ({
         .sort((a, b) => a.label.localeCompare(b.label)),
     [categories]
   );
-  const [_, startTransition] = useTransition();
+  const [isPending, startTransition] = useTransition();
   return (
     <Combobox
       {...props}
       name={name}
       options={categoryOptions}
+      isCreating={isPending}
       onCreate={(value) => startTransition(() => createCategory(value))}
     />
   );
