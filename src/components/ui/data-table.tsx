@@ -6,6 +6,7 @@ import {
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
+  getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
@@ -21,6 +22,7 @@ import {
 import { cn } from "@/lib/utils";
 import { ArrowUpDown, MoveDown, MoveUp } from "lucide-react";
 import { useState } from "react";
+import { Button } from "./button";
 import { Input } from "./input";
 
 interface DataTableProps<TData, TValue> {
@@ -53,6 +55,7 @@ export function DataTable<TData, TValue>({
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
   });
 
   return (
@@ -64,7 +67,7 @@ export function DataTable<TData, TValue>({
         value={globalFilter ?? ""}
       />
       <div className="rounded-md border">
-        <Table>
+        <Table className="rounded-md border">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
@@ -134,6 +137,28 @@ export function DataTable<TData, TValue>({
             )}
           </TableBody>
         </Table>
+      </div>
+      <div className="flex items-center justify-end space-x-2">
+        <div className="flex-1 text-sm text-muted-foreground">
+          {table.getFilteredSelectedRowModel().rows.length} of{" "}
+          {table.getFilteredRowModel().rows.length} row(s) selected.
+        </div>
+        <div className="space-x-2">
+          <Button
+            disabled={!table.getCanPreviousPage()}
+            onClick={() => table.previousPage()}
+            variant="outline"
+          >
+            Previous
+          </Button>
+          <Button
+            disabled={!table.getCanNextPage()}
+            onClick={() => table.nextPage()}
+            variant="outline"
+          >
+            Next
+          </Button>
+        </div>
       </div>
     </div>
   );
