@@ -10,6 +10,7 @@ const config = {
     "class-variance-authority",
     "gzip-size",
     "mkdirp",
+    "react-resizable-panels",
   ],
 };
 
