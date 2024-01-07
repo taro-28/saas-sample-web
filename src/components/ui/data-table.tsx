@@ -138,26 +138,31 @@ export function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-      <div className="flex items-center justify-end space-x-2">
-        <div className="flex-1 text-sm text-muted-foreground">
-          {table.getFilteredSelectedRowModel().rows.length} of{" "}
-          {table.getFilteredRowModel().rows.length} row(s) selected.
+      <div className="flex items-center justify-end">
+        <div className="flex-1 text-muted-foreground">
+          {table.getFilteredRowModel().rows?.length ?? 0} rows
         </div>
-        <div className="space-x-2">
-          <Button
-            disabled={!table.getCanPreviousPage()}
-            onClick={() => table.previousPage()}
-            variant="outline"
-          >
-            Previous
-          </Button>
-          <Button
-            disabled={!table.getCanNextPage()}
-            onClick={() => table.nextPage()}
-            variant="outline"
-          >
-            Next
-          </Button>
+        <div className="flex items-center space-x-4">
+          <div className="text-muted-foreground">
+            Page {table.getState().pagination.pageIndex + 1} of{" "}
+            {table.getPageCount()}
+          </div>
+          <div className="space-x-2">
+            <Button
+              disabled={!table.getCanPreviousPage()}
+              onClick={() => table.previousPage()}
+              variant="outline"
+            >
+              Previous
+            </Button>
+            <Button
+              disabled={!table.getCanNextPage()}
+              onClick={() => table.nextPage()}
+              variant="outline"
+            >
+              Next
+            </Button>
+          </div>
         </div>
       </div>
     </div>
