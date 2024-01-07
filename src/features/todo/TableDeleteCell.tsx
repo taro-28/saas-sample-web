@@ -16,7 +16,10 @@ export const TableDeleteCell = ({ row }: Props) => {
       variant="ghost"
       size="icon"
       disabled={isPending}
-      onClick={() => startTransition(() => deleteTodo(row.original.id))}
+      onClick={() => {
+        window.confirm("Are you sure you want to delete this todo?") &&
+          startTransition(() => deleteTodo(row.original.id));
+      }}
     >
       {isPending ? (
         <Loader className="animate-spin h-5 w-5" />
