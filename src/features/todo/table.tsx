@@ -1,6 +1,6 @@
 "use client";
 import { DataTable } from "@/components/ui/data-table";
-import { TodoTableFragment } from "@/gql/generated";
+import type { TodoTableFragment } from "@/gql/generated";
 import { useMemo } from "react";
 import { makeTodoTableColumns } from "./tableColumns";
 

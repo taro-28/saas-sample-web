@@ -2,7 +2,7 @@
 
 import { SubmitButton } from "@/components/SubmitButton";
 import { Input } from "@/components/ui/input";
-import { CreateTodoFormFragment } from "@/gql/generated";
+import type { CreateTodoFormFragment } from "@/gql/generated";
 import { Plus } from "lucide-react";
 import { useRef, useState } from "react";
 import { useFormState } from "react-dom";

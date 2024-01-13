@@ -13,10 +13,11 @@
     "rules": {
       "all": true,
       "style": {
-        "useNamingConvention": "off"
+        "useNamingConvention": "off",
+        "noDefaultExport": "off"
       },
       "nursery": {
-        "noDefaultExport": "off"
+        "useFilenamingConvention": "off"
       },
       "complexity": {
         "noForEach": "off"
