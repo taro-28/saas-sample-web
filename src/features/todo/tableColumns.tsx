@@ -1,7 +1,7 @@
 "use client";
-import { MakeTodoTableColumnsFragment } from "@/gql/generated";
+import type { MakeTodoTableColumnsFragment } from "@/gql/generated";
 import { Temporal } from "@js-temporal/polyfill";
-import { ColumnDef } from "@tanstack/react-table";
+import type { ColumnDef } from "@tanstack/react-table";
 import { useOptimistic, useTransition } from "react";
 import { CategoryCombobox } from "../category/combobox";
 import { TableDeleteCell } from "./TableDeleteCell";
@@ -52,10 +52,12 @@ export const makeTodoTableColumns: (
     accessorKey: "category.name",
     header: "Category",
     cell: ({ row: { original } }) => {
+      // biome-ignore lint/correctness/useHookAtTopLevel:
       const [optimisticCategory, selectOptimisticCategory] = useOptimistic(
         original.category?.id ?? "",
         (_, categoryId: string) => categoryId,
       );
+      // biome-ignore lint/correctness/useHookAtTopLevel:
       const [_, startTransition] = useTransition();
       return (
         <CategoryCombobox

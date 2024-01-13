@@ -8,7 +8,7 @@ import { ClerkProvider, UserButton } from "@clerk/nextjs";
 import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import NextLink from "next/link";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 import { NavigationItemLink } from "./NavigationItemLink";
 import "./globals.css";
 
@@ -30,7 +30,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <ClerkProvider>
       <html lang="en">
         <body className="grid min-h-screen grid-rows-[auto_1fr_auto]">
-          <header className="border-b-2 p-4 text-center flex justify-between">
+          <header className="border-b-2 text-center flex justify-between p-4">
             <NextLink className="text-2xl font-bold" href="/">
               {APP_NAME}
             </NextLink>

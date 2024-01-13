@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { CategoryTableFragment } from "@/gql/generated";
-import { ColumnDef } from "@tanstack/react-table";
+import type { CategoryTableFragment } from "@/gql/generated";
+import type { ColumnDef } from "@tanstack/react-table";
 import { Loader, Trash2 } from "lucide-react";
 import { useTransition } from "react";
 import { deleteCategory } from "./delete";

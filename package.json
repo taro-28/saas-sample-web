@@ -11,7 +11,7 @@
     "lint": "bunx @biomejs/biome lint .",
     "lint-fix": "bunx @biomejs/biome lint . --apply",
     "check": "bunx @biomejs/biome check .",
-    "check-fix": "bunx @biomejs/biome check . --apply",
+    "check-fix": "bunx @biomejs/biome check . --apply-unsafe",
     "type-check": "tsc --noEmit",
     "knip": "knip",
     "all-check": "bun check && bun type-check && bun knip"

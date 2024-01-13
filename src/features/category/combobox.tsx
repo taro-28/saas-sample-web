@@ -1,8 +1,8 @@
 "use client";
 
 import { Combobox } from "@/components/ui/combobox";
-import { CategoryComboboxFragment } from "@/gql/generated";
-import { ComponentPropsWithoutRef, useMemo, useTransition } from "react";
+import type { CategoryComboboxFragment } from "@/gql/generated";
+import { type ComponentPropsWithoutRef, useMemo, useTransition } from "react";
 import { createCategory } from "./create";
 
 /* GraphQL */ `

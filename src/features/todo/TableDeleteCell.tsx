@@ -2,8 +2,8 @@
 
 import { Button } from "@/components/ui/button";
 import { deleteTodo } from "@/features/todo/delete";
-import { TodoTableTodoFragment } from "@/gql/generated";
-import { CellContext } from "@tanstack/react-table";
+import type { TodoTableTodoFragment } from "@/gql/generated";
+import type { CellContext } from "@tanstack/react-table";
 import { Loader, Trash2 } from "lucide-react";
 import { useTransition } from "react";
 
