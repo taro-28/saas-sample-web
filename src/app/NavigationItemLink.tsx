@@ -2,7 +2,7 @@
 import clsx from "clsx";
 import NextLink from "next/link";
 import { usePathname } from "next/navigation";
-import { ComponentPropsWithoutRef } from "react";
+import type { ComponentPropsWithoutRef } from "react";
 
 export const NavigationItemLink = ({
   href,
