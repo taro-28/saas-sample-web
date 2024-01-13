@@ -27,7 +27,7 @@ jobs:
       - name: Install Dependencies
         run: bun i
       - name: Setup Biome
-        uses: biomejs/setup-biome@v1
+        uses: biomejs/setup-biome@v2
       - name: Run Biome
         run: biome ci .
       - name: Typecheck
