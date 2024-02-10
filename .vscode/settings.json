@@ -4,8 +4,5 @@
   "editor.codeActionsOnSave": {
     "quickfix.biome": "always",
     "source.organizeImports.biome": "always"
-  },
-  "[graphql]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
   }
 }
