@@ -3,14 +3,11 @@ const config = {
   ignore: ["src/gql/generated.ts", "src/components/ui/**/*.{ts,tsx}"],
   ignoreDependencies: [
     "@biomejs/biome",
-    "@radix-ui/react-slot",
-    "@radix-ui/react-dialog",
-    "@radix-ui/react-popover",
-    "cmdk",
-    "class-variance-authority",
     "gzip-size",
     "mkdirp",
-    "react-resizable-panels",
+    "@graphql-codegen/typescript",
+    "@graphql-codegen/typescript-graphql-request",
+    "@graphql-codegen/typescript-operations",
   ],
 };
 
