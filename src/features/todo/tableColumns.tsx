@@ -52,12 +52,10 @@ export const makeTodoTableColumns: (
     accessorKey: "category.name",
     header: "Category",
     cell: ({ row: { original } }) => {
-      // biome-ignore lint/correctness/useHookAtTopLevel:
       const [optimisticCategory, selectOptimisticCategory] = useOptimistic(
         original.category?.id ?? "",
         (_, categoryId: string) => categoryId,
       );
-      // biome-ignore lint/correctness/useHookAtTopLevel:
       const [_, startTransition] = useTransition();
       return (
         <CategoryCombobox
