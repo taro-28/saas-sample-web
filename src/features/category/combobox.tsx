@@ -5,7 +5,7 @@ import type { CategoryComboboxFragment } from "@/gql/generated";
 import { type ComponentPropsWithoutRef, useMemo, useTransition } from "react";
 import { createCategory } from "./create";
 
-/* GraphQL */ `
+`#graphql
 fragment CategoryCombobox on Query {
     categories {
         id

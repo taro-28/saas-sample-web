@@ -4,11 +4,12 @@ import { getGqlClient } from "@/functions/gqlRequest";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
-/* GraphQL */ `
+`#graphql
 mutation createTodo($input: CreateTodoInput!) {
   createTodo(input: $input) {
-      id
-    }
+    id
+    content
+  }
 }
 `;
 

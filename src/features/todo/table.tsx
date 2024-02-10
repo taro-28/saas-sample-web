@@ -4,7 +4,7 @@ import type { TodoTableFragment } from "@/gql/generated";
 import { useMemo } from "react";
 import { makeTodoTableColumns } from "./tableColumns";
 
-/* GraphQL */ `
+`#graphql
 fragment TodoTable on Query {
   ...MakeTodoTableColumns
 }

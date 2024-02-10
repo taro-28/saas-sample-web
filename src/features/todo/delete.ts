@@ -2,7 +2,7 @@
 import { getGqlClient } from "@/functions/gqlRequest";
 import { revalidatePath } from "next/cache";
 
-/* GraphQL */ `
+`#graphql
 mutation deleteTodo($id: ID!) {
   deleteTodo(id: $id)
 }

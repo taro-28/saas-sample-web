@@ -9,7 +9,7 @@ import { useFormState } from "react-dom";
 import { CategoryCombobox } from "../category/combobox";
 import { createTodo } from "./create";
 
-/* GraphQL */ `
+`#graphql
 fragment CreateTodoForm on Query {
   ...CategoryCombobox
 }

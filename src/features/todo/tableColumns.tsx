@@ -8,7 +8,7 @@ import { TableDeleteCell } from "./TableDeleteCell";
 import { TableDoneCell } from "./TableDoneCell";
 import { updateTodo } from "./update";
 
-/* GraphQL */ `
+`#graphql
 fragment TodoTableTodo on Todo {
   id
   content

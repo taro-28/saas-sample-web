@@ -6,7 +6,7 @@ import { Loader, Trash2 } from "lucide-react";
 import { useTransition } from "react";
 import { deleteCategory } from "./delete";
 
-/* GraphQL */ `
+`#graphql
 fragment CategoryTable on Query {
     categories {
         id
