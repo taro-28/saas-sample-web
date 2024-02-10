@@ -3,7 +3,7 @@
 import { getGqlClient } from "@/functions/gqlRequest";
 import { revalidatePath } from "next/cache";
 
-/* GraphQL */ `
+`#graphql
 mutation createCategory($input: CreateCategoryInput!) {
   createCategory(input: $input) {
       id

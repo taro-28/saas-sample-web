@@ -3,7 +3,7 @@ import { CreateTodoForm } from "@/features/todo/CreateForm";
 import { TodoTable } from "@/features/todo/table";
 import { getGqlClient } from "@/functions/gqlRequest";
 
-/* GraphQL */ `
+`#graphql
 query TodoPage {
   ...CreateTodoForm
   ...TodoTable

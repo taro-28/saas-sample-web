@@ -3,7 +3,7 @@
 import { getGqlClient } from "@/functions/gqlRequest";
 import { revalidatePath } from "next/cache";
 
-/* GraphQL */ `
+`#graphql
 mutation updateDoneTodo($id: ID!, $done: Boolean!) {
   updateTodoDone(input: { id: $id, done: $done }){
     id
