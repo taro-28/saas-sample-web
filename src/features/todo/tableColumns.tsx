@@ -36,7 +36,7 @@ type Props = {
 };
 
 export const makeTodoTableColumns: (
-  props: Props
+  props: Props,
 ) => ColumnDef<TodoTableTodoFragment>[] = ({ fragmentType }) => {
   const data = getFragmentData(queryFragmentDoc, fragmentType);
   return [
@@ -59,7 +59,7 @@ export const makeTodoTableColumns: (
       cell: ({ row: { original } }) => {
         const [optimisticCategory, selectOptimisticCategory] = useOptimistic(
           original.category?.id ?? "",
-          (_, categoryId: string) => categoryId
+          (_, categoryId: string) => categoryId,
         );
         const [_, startTransition] = useTransition();
         return (
@@ -83,7 +83,7 @@ export const makeTodoTableColumns: (
       header: "Created At",
       cell: ({ row }) =>
         Temporal.Instant.fromEpochSeconds(
-          row.original.createdAt
+          row.original.createdAt,
         ).toLocaleString("ja-JP"),
     },
     {

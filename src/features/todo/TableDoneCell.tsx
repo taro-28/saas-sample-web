@@ -16,7 +16,7 @@ export const TableDoneCell = ({
 }: Props) => {
   const [optimisticDone, toggleOptimisticDone] = useOptimistic(
     done,
-    (_, done: boolean) => done
+    (_, done: boolean) => done,
   );
   const [_, startTransition] = useTransition();
 

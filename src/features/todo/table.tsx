@@ -23,7 +23,7 @@ export const TodoTable = ({ fragmentType }: Props) => {
 
   const columns = useMemo(
     () => makeTodoTableColumns({ fragmentType: fragmentData }),
-    [fragmentData]
+    [fragmentData],
   );
 
   return (

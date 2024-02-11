@@ -49,7 +49,7 @@ export function DataTable<TData, TValue>({
     onGlobalFilterChange: setGlobalFilter,
     state: {
       columnVisibility: Object.fromEntries(
-        hiddenColumns.map((key) => [key, false])
+        hiddenColumns.map((key) => [key, false]),
       ),
       sorting,
       globalFilter,
@@ -86,7 +86,7 @@ export function DataTable<TData, TValue>({
                           ? null
                           : flexRender(
                               header.column.columnDef.header,
-                              header.getContext()
+                              header.getContext(),
                             )}
                         {(() => {
                           if (!canSort) {
@@ -121,7 +121,7 @@ export function DataTable<TData, TValue>({
                     <TableCell key={cell.id}>
                       {flexRender(
                         cell.column.columnDef.cell,
-                        cell.getContext()
+                        cell.getContext(),
                       )}
                     </TableCell>
                   ))}
