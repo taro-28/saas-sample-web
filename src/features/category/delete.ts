@@ -1,14 +1,15 @@
 "use server";
 import { getGqlClient } from "@/functions/gqlRequest";
+import { graphql } from "@/gql";
 import { revalidatePath } from "next/cache";
 
-`#graphql
+const doc = graphql(`
 mutation deleteCategory($id: ID!) {
   deleteCategory(id: $id)
 }
-`;
+`);
 
 export const deleteCategory = async (id: string) => {
-  (await getGqlClient()).deleteCategory({ id });
+  (await getGqlClient()).request(doc, { id });
   revalidatePath("/");
 };

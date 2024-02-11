@@ -1,13 +1,13 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import type { TodoTableTodoFragment } from "@/gql/generated";
 import type { CellContext } from "@tanstack/react-table";
 import { CheckCircle, CircleDashed } from "lucide-react";
 import { useOptimistic, useTransition } from "react";
+import { TodoTableTodo } from "./tableColumns";
 import { updateTodoDone } from "./toggleDone";
 
-type Props = CellContext<TodoTableTodoFragment, unknown>;
+type Props = CellContext<TodoTableTodo, unknown>;
 
 export const TableDoneCell = ({
   row: {
@@ -16,7 +16,7 @@ export const TableDoneCell = ({
 }: Props) => {
   const [optimisticDone, toggleOptimisticDone] = useOptimistic(
     done,
-    (_, done: boolean) => done,
+    (_, done: boolean) => done
   );
   const [_, startTransition] = useTransition();
 
