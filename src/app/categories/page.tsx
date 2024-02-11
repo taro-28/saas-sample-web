@@ -7,7 +7,7 @@ import {
 import { getGqlClient } from "@/functions/gqlRequest";
 import { getFragmentData, graphql } from "@/gql";
 
-const query = graphql(`
+const doc = graphql(`
   query CategoryPage {
     categories {
       ...CategoryTableCategory
@@ -16,11 +16,8 @@ const query = graphql(`
 `);
 
 export default async function Home() {
-  const queryResult = await (await getGqlClient()).request(query);
-  const categories = getFragmentData(
-    categoryFragmentDoc,
-    queryResult.categories
-  );
+  const query = await (await getGqlClient()).request(doc);
+  const categories = getFragmentData(categoryFragmentDoc, query.categories);
   return (
     <div className="w-full space-y-4">
       <PageTitle>Category</PageTitle>

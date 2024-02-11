@@ -9,18 +9,18 @@ import { useFormState } from "react-dom";
 import { CategoryCombobox } from "../category/combobox";
 import { createTodo } from "./create";
 
-const fragment = graphql(`
+const doc = graphql(`
   fragment CreateTodoForm on Query {
     ...CategoryCombobox
   }
 `);
 
 type Props = {
-  fragmentType: FragmentType<typeof fragment>;
+  fragmentType: FragmentType<typeof doc>;
 };
 
 export const CreateTodoForm = ({ fragmentType }: Props) => {
-  const data = getFragmentData(fragment, fragmentType);
+  const fragment = getFragmentData(doc, fragmentType);
 
   const [{ message }, action] = useFormState(createTodo, {
     message: "",
@@ -45,7 +45,7 @@ export const CreateTodoForm = ({ fragmentType }: Props) => {
         />
         <CategoryCombobox
           name="category"
-          fragmentType={data}
+          fragmentType={fragment}
           value={categoryValue}
           onChange={setCategoryValue}
         />

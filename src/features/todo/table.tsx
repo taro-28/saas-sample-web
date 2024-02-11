@@ -4,7 +4,7 @@ import { FragmentType, getFragmentData, graphql } from "@/gql";
 import { useMemo } from "react";
 import { makeTodoTableColumns, todoFragmentDoc } from "./tableColumns";
 
-const fragment = graphql(`
+const doc = graphql(`
   fragment TodoTable on Query {
     todos {
       ...TodoTableTodo
@@ -14,16 +14,16 @@ const fragment = graphql(`
 `);
 
 type Props = {
-  fragmentType: FragmentType<typeof fragment>;
+  fragmentType: FragmentType<typeof doc>;
 };
 
 export const TodoTable = ({ fragmentType }: Props) => {
-  const fragmentData = getFragmentData(fragment, fragmentType);
-  const todos = getFragmentData(todoFragmentDoc, fragmentData.todos);
+  const fragment = getFragmentData(doc, fragmentType);
+  const todos = getFragmentData(todoFragmentDoc, fragment.todos);
 
   const columns = useMemo(
-    () => makeTodoTableColumns({ fragmentType: fragmentData }),
-    [fragmentData],
+    () => makeTodoTableColumns({ fragmentType: fragment }),
+    [fragment]
   );
 
   return (
