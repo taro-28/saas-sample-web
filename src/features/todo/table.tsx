@@ -1,22 +1,31 @@
 "use client";
 import { DataTable } from "@/components/ui/data-table";
-import type { TodoTableFragment } from "@/gql/generated";
+import { FragmentType, getFragmentData, graphql } from "@/gql";
 import { useMemo } from "react";
-import { makeTodoTableColumns } from "./tableColumns";
+import { makeTodoTableColumns, todoFragmentDoc } from "./tableColumns";
 
-`#graphql
-fragment TodoTable on Query {
-  ...MakeTodoTableColumns
-}
-`;
+const fragment = graphql(`
+  fragment TodoTable on Query {
+    todos {
+      ...TodoTableTodo
+    }
+    ...MakeTodoTableColumns
+  }
+`);
 
-type Props = TodoTableFragment;
+type Props = {
+  fragmentType: FragmentType<typeof fragment>;
+};
 
-export const TodoTable = ({ todos, categories }: Props) => {
+export const TodoTable = ({ fragmentType }: Props) => {
+  const fragmentData = getFragmentData(fragment, fragmentType);
+  const todos = getFragmentData(todoFragmentDoc, fragmentData.todos);
+
   const columns = useMemo(
-    () => makeTodoTableColumns({ categories }),
-    [categories],
+    () => makeTodoTableColumns({ fragmentType: fragmentData }),
+    [fragmentData]
   );
+
   return (
     <DataTable
       columns={columns}

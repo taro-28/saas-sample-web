@@ -2,22 +2,26 @@
 
 import { SubmitButton } from "@/components/SubmitButton";
 import { Input } from "@/components/ui/input";
-import type { CreateTodoFormFragment } from "@/gql/generated";
+import { FragmentType, getFragmentData, graphql } from "@/gql";
 import { Plus } from "lucide-react";
 import { useRef, useState } from "react";
 import { useFormState } from "react-dom";
 import { CategoryCombobox } from "../category/combobox";
 import { createTodo } from "./create";
 
-`#graphql
-fragment CreateTodoForm on Query {
-  ...CategoryCombobox
-}
-`;
+const fragment = graphql(`
+  fragment CreateTodoForm on Query {
+    ...CategoryCombobox
+  }
+`);
 
-type Props = CreateTodoFormFragment;
+type Props = {
+  fragmentType: FragmentType<typeof fragment>;
+};
 
-export const CreateTodoForm = ({ categories }: Props) => {
+export const CreateTodoForm = ({ fragmentType }: Props) => {
+  const data = getFragmentData(fragment, fragmentType);
+
   const [{ message }, action] = useFormState(createTodo, {
     message: "",
   });
@@ -41,7 +45,7 @@ export const CreateTodoForm = ({ categories }: Props) => {
         />
         <CategoryCombobox
           name="category"
-          categories={categories}
+          fragmentType={data}
           value={categoryValue}
           onChange={setCategoryValue}
         />
