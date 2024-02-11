@@ -1,20 +1,21 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import type { CategoryTableFragment } from "@/gql/generated";
+import { graphql } from "@/gql";
+import { CategoryTableFragment } from "@/gql/graphql";
 import type { ColumnDef } from "@tanstack/react-table";
 import { Loader, Trash2 } from "lucide-react";
 import { useTransition } from "react";
 import { deleteCategory } from "./delete";
 
-`#graphql
-fragment CategoryTable on Query {
+graphql(`
+  fragment CategoryTable on Query {
     categories {
-        id
-        name
-        createdAt
+      id
+      name
+      createdAt
     }
-}
-`;
+  }
+`);
 
 export const categoryTableColumns: ColumnDef<
   CategoryTableFragment["categories"][number]
