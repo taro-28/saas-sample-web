@@ -8,6 +8,9 @@ const codegenConfig: CodegenConfig = {
       presetConfig: {
         fragmentMasking: { unmaskFunctionName: "getFragmentData" },
       },
+      config: {
+        useTypeImports: true,
+      },
     },
   },
 };
