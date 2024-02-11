@@ -10,6 +10,7 @@ const codegenConfig: CodegenConfig = {
       },
       config: {
         useTypeImports: true,
+        skipTypename: true,
       },
     },
   },
