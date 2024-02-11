@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import type { TodoTableTodoFragment } from "@/gql/generated";
+import { TodoTableTodoFragment } from "@/gql/graphql";
 import type { CellContext } from "@tanstack/react-table";
 import { CheckCircle, CircleDashed } from "lucide-react";
 import { useOptimistic, useTransition } from "react";

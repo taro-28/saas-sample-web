@@ -1,4 +1,3 @@
-import { getSdk } from "@/gql/generated";
 import { GoogleAuth } from "google-auth-library";
 import { GraphQLClient } from "graphql-request";
 import { cache } from "react";
@@ -7,9 +6,7 @@ const serviceAccountJsonString = process.env.SERVICE_ACCOUNT_JSON;
 
 const apiUrl = process.env.API_URL ?? "";
 
-const registerGqlClient = (
-  makeClient: () => Promise<ReturnType<typeof getSdk>>,
-) => {
+const registerGqlClient = (makeClient: () => Promise<GraphQLClient>) => {
   const getClient = cache(makeClient);
   return { getClient };
 };
@@ -29,5 +26,5 @@ export const { getClient: getGqlClient } = registerGqlClient(async () => {
   const graphQLClient = new GraphQLClient(`${apiUrl}/query`, {
     headers,
   });
-  return getSdk(graphQLClient);
+  return graphQLClient;
 });

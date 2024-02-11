@@ -1,17 +1,18 @@
 "use server";
 import { getGqlClient } from "@/functions/gqlRequest";
-import type { UpdateTodoInput } from "@/gql/generated";
+import { graphql } from "@/gql";
+import { UpdateTodoInput } from "@/gql/graphql";
 import { revalidatePath } from "next/cache";
 
-`#graphql
+const doc = graphql(`
 mutation updateTodo($input: UpdateTodoInput!) {
   updateTodo(input: $input){
     id
   }
 }
-`;
+`);
 
 export const updateTodo = async (input: UpdateTodoInput) => {
-  await (await getGqlClient()).updateTodo({ input });
+  await (await getGqlClient()).request(doc, { input });
   revalidatePath("/");
 };

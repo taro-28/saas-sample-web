@@ -1,17 +1,18 @@
 "use server";
 
 import { getGqlClient } from "@/functions/gqlRequest";
+import { graphql } from "@/gql";
 import { revalidatePath } from "next/cache";
 
-`#graphql
+const doc = graphql(`
 mutation createCategory($input: CreateCategoryInput!) {
   createCategory(input: $input) {
       id
     }
 }
-`;
+`);
 
 export const createCategory = async (name: string) => {
-  await (await getGqlClient()).createCategory({ input: { name } });
+  await (await getGqlClient()).request(doc, { input: { name } });
   revalidatePath("/");
 };

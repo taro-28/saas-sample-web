@@ -27,7 +27,7 @@ import { Input } from "./input";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
-  data: TData[];
+  data: readonly TData[];
   hiddenColumns?: (keyof TData)[];
   initialSorting?: SortingState;
 }
@@ -41,6 +41,8 @@ export function DataTable<TData, TValue>({
   const [sorting, setSorting] = useState<SortingState>(initialSorting);
   const [globalFilter, setGlobalFilter] = useState("");
   const table = useReactTable({
+    // @ts-ignore - tanstack/table does not support readonly arrays
+    // https://github.com/TanStack/table/discussions/3648
     data,
     columns,
     onSortingChange: setSorting,

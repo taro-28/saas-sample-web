@@ -1,31 +1,34 @@
 "use client";
 
 import { Combobox } from "@/components/ui/combobox";
-import type { CategoryComboboxFragment } from "@/gql/generated";
+import { FragmentType, getFragmentData, graphql } from "@/gql";
 import { type ComponentPropsWithoutRef, useMemo, useTransition } from "react";
 import { createCategory } from "./create";
 
-`#graphql
-fragment CategoryCombobox on Query {
+const fragment = graphql(`
+  fragment CategoryCombobox on Query {
     categories {
-        id
-        name
-        createdAt
+      id
+      name
+      createdAt
     }
-}
-`;
+  }
+`);
 
-type Props = CategoryComboboxFragment &
-  Omit<
-    ComponentPropsWithoutRef<typeof Combobox>,
-    "options" | "onCreate" | "isCreating"
-  >;
+type Props = {
+  fragmentType: FragmentType<typeof fragment>;
+} & Omit<
+  ComponentPropsWithoutRef<typeof Combobox>,
+  "options" | "onCreate" | "isCreating"
+>;
 
 export const CategoryCombobox = ({
-  categories,
+  fragmentType,
   name = "category",
   ...props
 }: Props) => {
+  const { categories } = getFragmentData(fragment, fragmentType);
+
   const categoryOptions = useMemo(
     () =>
       categories
