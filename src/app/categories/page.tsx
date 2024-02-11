@@ -1,21 +1,23 @@
 import { PageTitle } from "@/components/PageTitle";
 import { DataTable } from "@/components/ui/data-table";
-import { categoryTableColumns } from "@/features/category/tableColumns";
+import {
+  categoryFragmentDoc,
+  categoryTableColumns,
+} from "@/features/category/tableColumns";
 import { getGqlClient } from "@/functions/gqlRequest";
-import { graphql } from "@/gql";
+import { getFragmentData, graphql } from "@/gql";
 
-const query = graphql(`
+const doc = graphql(`
   query CategoryPage {
     categories {
-      id
-      name
-      createdAt
+      ...CategoryTableCategory
     }
   }
 `);
 
 export default async function Home() {
-  const { categories } = await (await getGqlClient()).request(query);
+  const query = await (await getGqlClient()).request(doc);
+  const categories = getFragmentData(categoryFragmentDoc, query.categories);
   return (
     <div className="w-full space-y-4">
       <PageTitle>Category</PageTitle>

@@ -5,7 +5,7 @@ import { FragmentType, getFragmentData, graphql } from "@/gql";
 import { type ComponentPropsWithoutRef, useMemo, useTransition } from "react";
 import { createCategory } from "./create";
 
-const fragment = graphql(`
+const doc = graphql(`
   fragment CategoryCombobox on Query {
     categories {
       id
@@ -16,7 +16,7 @@ const fragment = graphql(`
 `);
 
 type Props = {
-  fragmentType: FragmentType<typeof fragment>;
+  fragmentType: FragmentType<typeof doc>;
 } & Omit<
   ComponentPropsWithoutRef<typeof Combobox>,
   "options" | "onCreate" | "isCreating"
@@ -27,7 +27,7 @@ export const CategoryCombobox = ({
   name = "category",
   ...props
 }: Props) => {
-  const { categories } = getFragmentData(fragment, fragmentType);
+  const { categories } = getFragmentData(doc, fragmentType);
 
   const categoryOptions = useMemo(
     () =>

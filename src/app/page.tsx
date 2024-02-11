@@ -12,13 +12,13 @@ const doc = graphql(`
 `);
 
 export default async function Home() {
-  const queryResult = await (await getGqlClient()).request(doc);
+  const query = await (await getGqlClient()).request(doc);
 
   return (
     <div className="w-full space-y-4">
       <PageTitle>Todo</PageTitle>
-      <CreateTodoForm fragmentType={queryResult} />
-      <TodoTable fragmentType={queryResult} />
+      <CreateTodoForm fragmentType={query} />
+      <TodoTable fragmentType={query} />
     </div>
   );
 }

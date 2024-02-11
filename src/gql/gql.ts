@@ -13,12 +13,12 @@ import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
-    "\n  query CategoryPage {\n    categories {\n      id\n      name\n      createdAt\n    }\n  }\n": types.CategoryPageDocument,
+    "\n  query CategoryPage {\n    categories {\n      ...CategoryTableCategory\n    }\n  }\n": types.CategoryPageDocument,
     "\n  query TodoPage {\n    ...CreateTodoForm\n    ...TodoTable\n  }\n": types.TodoPageDocument,
     "\n  fragment CategoryCombobox on Query {\n    categories {\n      id\n      name\n      createdAt\n    }\n  }\n": types.CategoryComboboxFragmentDoc,
     "\nmutation createCategory($input: CreateCategoryInput!) {\n  createCategory(input: $input) {\n      id\n    }\n}\n": types.CreateCategoryDocument,
     "\nmutation deleteCategory($id: ID!) {\n  deleteCategory(id: $id)\n}\n": types.DeleteCategoryDocument,
-    "\n  fragment CategoryTable on Query {\n    categories {\n      id\n      name\n      createdAt\n    }\n  }\n": types.CategoryTableFragmentDoc,
+    "\n  fragment CategoryTableCategory on Category {\n    id\n    name\n    createdAt\n  }\n": types.CategoryTableCategoryFragmentDoc,
     "\n  fragment CreateTodoForm on Query {\n    ...CategoryCombobox\n  }\n": types.CreateTodoFormFragmentDoc,
     "\nmutation createTodo($input: CreateTodoInput!) {\n  createTodo(input: $input) {\n    id\n    content\n  }\n}\n": types.CreateTodoDocument,
     "\nmutation deleteTodo($id: ID!) {\n  deleteTodo(id: $id)\n}\n": types.DeleteTodoDocument,
@@ -46,7 +46,7 @@ export function graphql(source: string): unknown;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  query CategoryPage {\n    categories {\n      id\n      name\n      createdAt\n    }\n  }\n"): (typeof documents)["\n  query CategoryPage {\n    categories {\n      id\n      name\n      createdAt\n    }\n  }\n"];
+export function graphql(source: "\n  query CategoryPage {\n    categories {\n      ...CategoryTableCategory\n    }\n  }\n"): (typeof documents)["\n  query CategoryPage {\n    categories {\n      ...CategoryTableCategory\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -66,7 +66,7 @@ export function graphql(source: "\nmutation deleteCategory($id: ID!) {\n  delete
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  fragment CategoryTable on Query {\n    categories {\n      id\n      name\n      createdAt\n    }\n  }\n"): (typeof documents)["\n  fragment CategoryTable on Query {\n    categories {\n      id\n      name\n      createdAt\n    }\n  }\n"];
+export function graphql(source: "\n  fragment CategoryTableCategory on Category {\n    id\n    name\n    createdAt\n  }\n"): (typeof documents)["\n  fragment CategoryTableCategory on Category {\n    id\n    name\n    createdAt\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
