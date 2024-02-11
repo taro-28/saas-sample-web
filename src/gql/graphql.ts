@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
+import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -17,7 +17,6 @@ export type Scalars = {
 };
 
 export type Category = {
-  __typename?: 'Category';
   createdAt: Scalars['Int']['output'];
   id: Scalars['ID']['output'];
   name: Scalars['String']['output'];
@@ -34,7 +33,6 @@ export type CreateTodoInput = {
 };
 
 export type Mutation = {
-  __typename?: 'Mutation';
   createCategory: Category;
   createTodo: Todo;
   deleteCategory: Scalars['ID']['output'];
@@ -80,13 +78,11 @@ export type MutationUpdateTodoDoneArgs = {
 };
 
 export type Query = {
-  __typename?: 'Query';
   categories: Array<Category>;
   todos: Array<Todo>;
 };
 
 export type Todo = {
-  __typename?: 'Todo';
   category?: Maybe<Category>;
   content: Scalars['String']['output'];
   createdAt: Scalars['Int']['output'];
@@ -113,68 +109,56 @@ export type UpdateTodoInput = {
 export type CategoryPageQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CategoryPageQuery = { __typename?: 'Query', categories: Array<{ __typename?: 'Category', id: string, name: string, createdAt: number }> };
+export type CategoryPageQuery = { categories: Array<{ id: string, name: string, createdAt: number }> };
 
 export type TodoPageQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type TodoPageQuery = (
-  { __typename?: 'Query' }
-  & { ' $fragmentRefs'?: { 'CreateTodoFormFragment': CreateTodoFormFragment;'TodoTableFragment': TodoTableFragment } }
-);
+export type TodoPageQuery = { ' $fragmentRefs'?: { 'CreateTodoFormFragment': CreateTodoFormFragment;'TodoTableFragment': TodoTableFragment } };
 
-export type CategoryComboboxFragment = { __typename?: 'Query', categories: Array<{ __typename?: 'Category', id: string, name: string, createdAt: number }> } & { ' $fragmentName'?: 'CategoryComboboxFragment' };
+export type CategoryComboboxFragment = { categories: Array<{ id: string, name: string, createdAt: number }> } & { ' $fragmentName'?: 'CategoryComboboxFragment' };
 
 export type CreateCategoryMutationVariables = Exact<{
   input: CreateCategoryInput;
 }>;
 
 
-export type CreateCategoryMutation = { __typename?: 'Mutation', createCategory: { __typename?: 'Category', id: string } };
+export type CreateCategoryMutation = { createCategory: { id: string } };
 
 export type DeleteCategoryMutationVariables = Exact<{
   id: Scalars['ID']['input'];
 }>;
 
 
-export type DeleteCategoryMutation = { __typename?: 'Mutation', deleteCategory: string };
+export type DeleteCategoryMutation = { deleteCategory: string };
 
-export type CategoryTableFragment = { __typename?: 'Query', categories: Array<{ __typename?: 'Category', id: string, name: string, createdAt: number }> } & { ' $fragmentName'?: 'CategoryTableFragment' };
+export type CategoryTableFragment = { categories: Array<{ id: string, name: string, createdAt: number }> } & { ' $fragmentName'?: 'CategoryTableFragment' };
 
-export type CreateTodoFormFragment = (
-  { __typename?: 'Query' }
-  & { ' $fragmentRefs'?: { 'CategoryComboboxFragment': CategoryComboboxFragment } }
-) & { ' $fragmentName'?: 'CreateTodoFormFragment' };
+export type CreateTodoFormFragment = { ' $fragmentRefs'?: { 'CategoryComboboxFragment': CategoryComboboxFragment } } & { ' $fragmentName'?: 'CreateTodoFormFragment' };
 
 export type CreateTodoMutationVariables = Exact<{
   input: CreateTodoInput;
 }>;
 
 
-export type CreateTodoMutation = { __typename?: 'Mutation', createTodo: { __typename?: 'Todo', id: string, content: string } };
+export type CreateTodoMutation = { createTodo: { id: string, content: string } };
 
 export type DeleteTodoMutationVariables = Exact<{
   id: Scalars['ID']['input'];
 }>;
 
 
-export type DeleteTodoMutation = { __typename?: 'Mutation', deleteTodo: string };
+export type DeleteTodoMutation = { deleteTodo: string };
 
 export type TodoTableFragment = (
-  { __typename?: 'Query', todos: Array<(
-    { __typename?: 'Todo' }
-    & { ' $fragmentRefs'?: { 'TodoTableTodoFragment': TodoTableTodoFragment } }
-  )> }
+  { todos: Array<{ ' $fragmentRefs'?: { 'TodoTableTodoFragment': TodoTableTodoFragment } }> }
   & { ' $fragmentRefs'?: { 'MakeTodoTableColumnsFragment': MakeTodoTableColumnsFragment } }
 ) & { ' $fragmentName'?: 'TodoTableFragment' };
 
-export type TodoTableTodoFragment = { __typename?: 'Todo', id: string, content: string, done: boolean, createdAt: number, category?: { __typename?: 'Category', id: string, name: string } | null } & { ' $fragmentName'?: 'TodoTableTodoFragment' };
+export type TodoTableTodoFragment = { id: string, content: string, done: boolean, createdAt: number, category?: { id: string, name: string } | null } & { ' $fragmentName'?: 'TodoTableTodoFragment' };
 
 export type MakeTodoTableColumnsFragment = (
-  { __typename?: 'Query', todos: Array<(
-    { __typename?: 'Todo' }
-    & { ' $fragmentRefs'?: { 'TodoTableTodoFragment': TodoTableTodoFragment } }
-  )> }
+  { todos: Array<{ ' $fragmentRefs'?: { 'TodoTableTodoFragment': TodoTableTodoFragment } }> }
   & { ' $fragmentRefs'?: { 'CategoryComboboxFragment': CategoryComboboxFragment } }
 ) & { ' $fragmentName'?: 'MakeTodoTableColumnsFragment' };
 
@@ -184,14 +168,14 @@ export type UpdateDoneTodoMutationVariables = Exact<{
 }>;
 
 
-export type UpdateDoneTodoMutation = { __typename?: 'Mutation', updateTodoDone: { __typename?: 'Todo', id: string } };
+export type UpdateDoneTodoMutation = { updateTodoDone: { id: string } };
 
 export type UpdateTodoMutationVariables = Exact<{
   input: UpdateTodoInput;
 }>;
 
 
-export type UpdateTodoMutation = { __typename?: 'Mutation', updateTodo: { __typename?: 'Todo', id: string } };
+export type UpdateTodoMutation = { updateTodo: { id: string } };
 
 export const CategoryTableFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"CategoryTable"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Query"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"categories"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}}]}}]}}]} as unknown as DocumentNode<CategoryTableFragment, unknown>;
 export const CategoryComboboxFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"CategoryCombobox"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Query"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"categories"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}}]}}]}}]} as unknown as DocumentNode<CategoryComboboxFragment, unknown>;
